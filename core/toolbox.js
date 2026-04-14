@@ -738,7 +738,9 @@ Blockly.Toolbox.Category.prototype.createDom = function() {
   this.label_ = goog.dom.createDom('div',
       {'class': 'scratchCategoryMenuItemLabel'},
       Blockly.utils.replaceMessageReferences(this.name_));
-  this.label_.style.color = this.colour_;
+  this.label_.style.setProperty('--category-colour', this.colour_);
+  this.label_.style.setProperty('--category-secondary',
+      this.secondaryColour_ || this.colour_);
   this.item_.appendChild(this.label_);
   this.parentHtml_.appendChild(this.item_);
   Blockly.bindEvent_(

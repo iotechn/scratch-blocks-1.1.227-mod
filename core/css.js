@@ -727,7 +727,7 @@ Blockly.Css.CONTENT = [
 
   '.blocklyMainBackground {',
     'stroke-width: 1;',
-    'stroke:rgb(220, 220, 220);',  /* Equates to #ddd due to border being off-pixel. */
+    'stroke: #c6c6c6;',  /* Equates to #ddd due to border being off-pixel. */
   '}',
 
   '.blocklyMutatorBackground {',
@@ -737,8 +737,7 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.blocklyFlyoutBackground {',
-    'fill: $colour_flyout;',
-    // 'fill-opacity: 0.45;',
+    'fill: rgba(8, 8, 12, 0.35);',
   '}',
 
   '.blocklyMainWorkspaceScrollbar {',
@@ -857,20 +856,18 @@ Blockly.Css.CONTENT = [
     'z-index: 40;', /* so blocks go over toolbox when dragging */
     'overflow: visible;',
     'border-radius: 12px;',
-    'box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);',
+    'box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);',
     'margin: 8px;',
-    'border: 1px solid rgba(255, 255, 255, 0.4);',
+    'border: 1px solid rgba(255, 255, 255, 0.12);',
     'overflow: hidden;',
-
-    // 'background-color: rgba(255, 255, 255, 0.4);',
-    // 'backdrop-filter: blur(12px);',
-    // '-webkit-backdrop-filter: blur(12px);',
-    // 'border-right: 1px solid rgba(255, 255, 255, 0.5);',
+    'background-color: rgba(0, 0, 0, 0.42);',
+    'backdrop-filter: blur(18px) saturate(1.25);',
+    '-webkit-backdrop-filter: blur(18px) saturate(1.25);',
   '}',
 
   /* Category tree in Toolbox. */
   '.blocklyToolboxDiv {',
-    'background-color: $colour_toolbox;',
+    'background-color: transparent;',
     'color: $colour_toolboxText;',
     'overflow-x: visible;',
     'overflow-y: auto;',
@@ -1307,7 +1304,7 @@ Blockly.Css.CONTENT = [
 
   '.scratchCategoryMenu {',
     'width: 40px;',
-    'background: $colour_toolbox;',
+    'background: transparent;',
     'color: $colour_toolboxText;',
     'font-size: .7rem;',
     'user-select: none;',
@@ -1321,7 +1318,7 @@ Blockly.Css.CONTENT = [
     'height: auto;',
     'min-height: 1.5em;',
     'overflow: auto;',
-    'background: $colour_toolbox;',
+    'background: transparent;',
     'color: $colour_toolboxText;',
     'font-size: .7em;',
     'user-select: none;',
@@ -1350,8 +1347,13 @@ Blockly.Css.CONTENT = [
   'line-height: 1.2;',
   'font-weight: bold;',
   'font-size: 14px;',
-  /* 细描边增强浅色文字可读性（优先用 text-stroke，退化为 text-shadow） */
-  '-webkit-text-stroke: 0.5px rgba(128, 128, 128, 0.2);',
+  // Metallic gradient along category hue (uses --category-colour from toolbox.js)
+  'background-image: linear-gradient(145deg, color-mix(in srgb, var(--category-colour, #a8a8a8) 18%, white) 0%, var(--category-colour, #888888) 38%, color-mix(in srgb, var(--category-colour, #888888) 35%, white) 52%, var(--category-secondary, #555555) 78%, color-mix(in srgb, var(--category-secondary, #444444) 55%, black) 100%);',
+  '-webkit-background-clip: text;',
+  'background-clip: text;',
+  '-webkit-text-fill-color: transparent;',
+  'color: transparent;',
+  'text-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.35);',
   '}',
 
   '.scratchCategoryMenuItem {',
@@ -1368,11 +1370,11 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.scratchCategoryMenuItem.categorySelected {',
-    'background: $colour_toolboxSelected;',
+    'background: rgba(255, 255, 255, 0.1);',
   '}',
 
   '.scratchCategoryMenuItem.categorySelected .scratchCategoryMenuItemLabel {',
-    'text-shadow: 0 0 6px currentColor, 0 0 10px currentColor;',
+    'filter: brightness(1.12) drop-shadow(0 0 3px rgba(255, 255, 255, 0.35));',
   '}',
 
   '.scratchCategoryItemBubble {',
@@ -1390,8 +1392,12 @@ Blockly.Css.CONTENT = [
     'background-size: 100%;',
   '}',
 
-  '.scratchCategoryMenuItem:hover {',
-    'color: $colour_toolboxHover !important;',
+  '.scratchCategoryMenuItem:hover .scratchCategoryMenuItemLabel {',
+    'filter: brightness(1.18);',
+  '}',
+
+  '.scratchCategoryMenuItem.categorySelected:hover .scratchCategoryMenuItemLabel {',
+    'filter: brightness(1.22) drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));',
   '}',
   ''
 ];
