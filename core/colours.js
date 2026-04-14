@@ -25,77 +25,91 @@ goog.provide('Blockly.Colours');
 Blockly.Colours = {
   // SVG colours: these must be specificed in #RRGGBB style
   // To add an opacity, this must be specified as a separate property (for SVG fill-opacity)
+  // Category hues follow metal gradients (145deg-style: light -> dark):
+  // gold #d4af37–#7a5c1a, silver #cfcfcf–#6a6a6a, copper #b87333–#5a2e12,
+  // iron #6e6e6e–#2a2a2a, platinum #e5e4e2–#8c8c8c
   "motion": {
-    "primary": "#4C97FF",
-    "secondary": "#4280D7",
-    "tertiary": "#3373CC",
-    "quaternary": "#3373CC"
+    // silver
+    "primary": "#CFCFCF",
+    "secondary": "#989898",
+    "tertiary": "#6A6A6A",
+    "quaternary": "#6A6A6A"
   },
   "looks": {
-    "primary": "#9966FF",
-    "secondary": "#855CD6",
-    "tertiary": "#774DCB",
-    "quaternary": "#774DCB"
+    // platinum
+    "primary": "#E5E4E2",
+    "secondary": "#BCBBB9",
+    "tertiary": "#8C8C8C",
+    "quaternary": "#8C8C8C"
   },
   "sounds": {
-    "primary": "#CF63CF",
-    "secondary": "#C94FC9",
-    "tertiary": "#BD42BD",
-    "quaternary": "#BD42BD"
+    // copper
+    "primary": "#B87333",
+    "secondary": "#8C5122",
+    "tertiary": "#5A2E12",
+    "quaternary": "#5A2E12"
   },
   "control": {
-    "primary": "#FFAB19",
-    "secondary": "#EC9C13",
-    "tertiary": "#CF8B17",
-    "quaternary": "#CF8B17"
+    // gold
+    "primary": "#D4AF37",
+    "secondary": "#A78528",
+    "tertiary": "#7A5C1A",
+    "quaternary": "#7A5C1A"
   },
   "event": {
-    "primary": "#FFBF00",
-    "secondary": "#E6AC00",
-    "tertiary": "#CC9900",
-    "quaternary": "#CC9900"
+    // gold
+    "primary": "#D4AF37",
+    "secondary": "#A78528",
+    "tertiary": "#7A5C1A",
+    "quaternary": "#7A5C1A"
   },
   "sensing": {
-    "primary": "#5CB1D6",
-    "secondary": "#47A8D1",
-    "tertiary": "#2E8EB8",
-    "quaternary": "#2E8EB8"
+    // silver
+    "primary": "#CFCFCF",
+    "secondary": "#989898",
+    "tertiary": "#6A6A6A",
+    "quaternary": "#6A6A6A"
   },
   "pen": {
-    "primary": "#0fBD8C",
-    "secondary": "#0DA57A",
-    "tertiary": "#0B8E69",
-    "quaternary": "#0B8E69"
+    // iron
+    "primary": "#6E6E6E",
+    "secondary": "#4C4C4C",
+    "tertiary": "#2A2A2A",
+    "quaternary": "#2A2A2A"
   },
   "operators": {
-    "primary": "#59C059",
-    "secondary": "#46B946",
-    "tertiary": "#389438",
-    "quaternary": "#389438"
+    // iron
+    "primary": "#6E6E6E",
+    "secondary": "#4C4C4C",
+    "tertiary": "#2A2A2A",
+    "quaternary": "#2A2A2A"
   },
   "data": {
-    "primary": "#FF8C1A",
-    "secondary": "#FF8000",
-    "tertiary": "#DB6E00",
-    "quaternary": "#DB6E00"
+    // copper
+    "primary": "#B87333",
+    "secondary": "#8C5122",
+    "tertiary": "#5A2E12",
+    "quaternary": "#5A2E12"
   },
   // This is not a new category, but rather for differentiation
   // between lists and scalar variables.
   "data_lists": {
-    "primary": "#FF661A",
-    "secondary": "#FF5500",
-    "tertiary": "#E64D00",
-    "quaternary": "#E64D00"
+    // copper (slightly deeper secondary for lists)
+    "primary": "#A8682E",
+    "secondary": "#7A4518",
+    "tertiary": "#4A260E",
+    "quaternary": "#4A260E"
   },
   "more": {
-    "primary": "#FF6680",
-    "secondary": "#FF4D6A",
-    "tertiary": "#FF3355",
-    "quaternary": "#FF3355"
+    // platinum
+    "primary": "#E5E4E2",
+    "secondary": "#BCBBB9",
+    "tertiary": "#8C8C8C",
+    "quaternary": "#8C8C8C"
   },
   "text": "#FFFFFF",
   "workspace": "#F9F9F9",
-  "toolboxHover": "#4C97FF",
+  "toolboxHover": "#989898",
   "toolboxSelected": "#e9eef2",
   "toolboxText": "#575E75",
   "toolbox": "#FFFFFF",

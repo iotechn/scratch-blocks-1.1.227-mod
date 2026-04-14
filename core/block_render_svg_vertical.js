@@ -521,7 +521,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
   // Render block stroke
   this.svgPath_.setAttribute('stroke', strokeColour);
 
-  // Render block fill
+  // Render block fill (metallic diagonal gradient when enabled)
   if (this.isGlowingBlock_ || renderShadowed) {
     // Use the block's shadow colour if possible.
     if (this.getShadowColour()) {
@@ -532,7 +532,8 @@ Blockly.BlockSvg.prototype.updateColour = function() {
   } else {
     var fillColour = this.getColour();
   }
-  this.svgPath_.setAttribute('fill', fillColour);
+  Blockly.utils.setPathFillMetallic(
+      this, this.svgPath_, fillColour, strokeColour);
 
   // Render opacity
   this.svgPath_.setAttribute('fill-opacity', this.getOpacity());

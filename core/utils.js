@@ -33,6 +33,7 @@
 goog.provide('Blockly.utils');
 
 goog.require('Blockly.Touch');
+goog.require('goog.color');
 goog.require('goog.dom');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.math.Coordinate');
@@ -946,3 +947,85 @@ Blockly.utils.startsWith = function(str, prefix) {
 Blockly.utils.toRadians = function(angleDegrees) {
   return angleDegrees * Math.PI / 180;
 };
+
+/**
+ * When false, block backgrounds use flat fills instead of metallic gradients.
+ * @type {boolean}
+ */
+Blockly.MetallicGradients = {
+  ENABLED: true
+};
+
+/**
+ * Build a stable id for an SVG metallic gradient from colour stops.
+ * @param {string} a Hex colour.
+ * @param {string} b Hex colour.
+ * @param {string} c Hex colour.
+ * @param {string} d Hex colour.
+ * @return {string} Unique id string for the gradient element.
+ * @private
+ */
+Blockly.utils.makeMetallicGradientId_ = function(a, b, c, d) {
+  return 'mb_' + (a + b + c + d).replace(/#/g, '');
+};
+
+/**
+ * Apply a diagonal metallic-style SVG gradient fill to a block path.
+ * @param {!Blockly.BlockSvg} block The rendered block.
+ * @param {!SVGElement} pathEl The block background path.
+ * @param {string} fillHex Main body colour (#RRGGBB).
+ * @param {string} darkHex Darkest stop (stroke colour, #RRGGBB).
+ */
+Blockly.utils.setPathFillMetallic = function(block, pathEl, fillHex, darkHex) {
+  if (!Blockly.MetallicGradients.ENABLED) {
+    pathEl.setAttribute('fill', fillHex);
+    return;
+  }
+  var ws = block.workspace;
+  if (!ws || !ws.getParentSvg) {
+    pathEl.setAttribute('fill', fillHex);
+    return;
+  }
+  var svg = ws.getParentSvg();
+  if (!svg) {
+    pathEl.setAttribute('fill', fillHex);
+    return;
+  }
+  var defs = svg.getElementsByTagName('defs')[0];
+  if (!defs) {
+    pathEl.setAttribute('fill', fillHex);
+    return;
+  }
+
+  var rgbFill = goog.color.hexToRgb(fillHex);
+  var rgbDark = goog.color.hexToRgb(darkHex);
+  var highlightHex = goog.color.rgbArrayToHex(
+      goog.color.blend(rgbFill, [255, 255, 255], 0.4));
+  var midHex = goog.color.rgbArrayToHex(
+      goog.color.blend(rgbFill, rgbDark, 0.45));
+  var gradId = Blockly.utils.makeMetallicGradientId_(
+      fillHex, highlightHex, midHex, darkHex);
+
+  var doc = svg.ownerDocument || document;
+  if (!doc.getElementById(gradId)) {
+    var lg = Blockly.utils.createSvgElement('linearGradient', {
+      'id': gradId,
+      'x1': '0%',
+      'y1': '0%',
+      'x2': '100%',
+      'y2': '100%',
+      'gradientUnits': 'objectBoundingBox'
+    }, defs);
+    Blockly.utils.createSvgElement('stop',
+        {'offset': '0%', 'stop-color': highlightHex}, lg);
+    Blockly.utils.createSvgElement('stop',
+        {'offset': '34%', 'stop-color': fillHex}, lg);
+    Blockly.utils.createSvgElement('stop',
+        {'offset': '72%', 'stop-color': midHex}, lg);
+    Blockly.utils.createSvgElement('stop',
+        {'offset': '100%', 'stop-color': darkHex}, lg);
+  }
+  pathEl.setAttribute('fill', 'url(#' + gradId + ')');
+};
+
+Blockly.MetallicGradients.setPathFillMetallic = Blockly.utils.setPathFillMetallic;
