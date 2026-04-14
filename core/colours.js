@@ -108,7 +108,7 @@ Blockly.Colours = {
     "quaternary": "#8C8C8C"
   },
   "text": "#FFFFFF",
-  "workspace": "#F9F9F9",
+  "workspace": "#151515",
   "toolboxHover": "#989898",
   "toolboxSelected": "#e9eef2",
   "toolboxText": "#575E75",
