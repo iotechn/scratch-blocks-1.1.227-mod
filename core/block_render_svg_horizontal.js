@@ -27,7 +27,6 @@
 goog.provide('Blockly.BlockSvg.render');
 
 goog.require('Blockly.BlockSvg');
-goog.require('Blockly.utils');
 
 
 // UI constants for rendering blocks.
@@ -308,16 +307,15 @@ Blockly.BlockSvg.prototype.connectionUiEffect = function() {
  * Change the colour of a block.
  */
 Blockly.BlockSvg.prototype.updateColour = function() {
+  var fillColour = (this.isGlowing_) ? this.getColourSecondary() : this.getColour();
   var strokeColour = this.getColourTertiary();
-  var fillColour = (this.isGlowingBlock_ || this.isGlowing_) ?
-      this.getColourSecondary() : this.getColour();
 
   // Render block stroke
   this.svgPath_.setAttribute('stroke', strokeColour);
 
-  // Render block fill (metallic diagonal gradient when enabled)
-  Blockly.utils.setPathFillMetallic(
-      this, this.svgPath_, fillColour, strokeColour);
+  // Render block fill
+  var fillColour = (this.isGlowingBlock_) ? this.getColourSecondary() : this.getColour();
+  this.svgPath_.setAttribute('fill', fillColour);
 
   // Render opacity
   this.svgPath_.setAttribute('fill-opacity', this.getOpacity());
