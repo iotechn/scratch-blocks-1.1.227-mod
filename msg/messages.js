@@ -290,6 +290,15 @@ Blockly.Msg.CATEGORY_SENSING = 'Sensing';
 Blockly.Msg.CATEGORY_OPERATORS = 'Operators';
 Blockly.Msg.CATEGORY_VARIABLES = 'Variables';
 Blockly.Msg.CATEGORY_MYBLOCKS = 'My Blocks';
+Blockly.Msg.CATEGORY_HARDWARE = 'Hardware';
+
+// Hardware blocks
+Blockly.Msg.HARDWARE_GPIO_SET_MODE_PREFIX = 'set GPIO pin';
+Blockly.Msg.HARDWARE_GPIO_SET_MODE_MIDDLE = 'mode to';
+Blockly.Msg.HARDWARE_GPIO_MODE_INPUT = 'input';
+Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT = 'output';
+Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP = 'input pull-up';
+Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN = 'input pull-down';
 
 // Context menus
 Blockly.Msg.DUPLICATE = 'Duplicate';

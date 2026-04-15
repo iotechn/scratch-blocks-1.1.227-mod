@@ -262,6 +262,9 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
   '</category>' +
+  '<category name="%{BKY_CATEGORY_HARDWARE}" id="hardware" colour="#4C97FF" secondaryColour="#3373CC">' +
+    '<block type="gpio_set_mode" id="gpio_set_mode"></block>' +
+  '</category>' +
   '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
