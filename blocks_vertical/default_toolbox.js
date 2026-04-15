@@ -281,43 +281,4 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
   '</category>' +
   '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
   '</category>' +
-  '<category name="Extensions" id="extensions" colour="#FF6680" secondaryColour="#FF4D6A" ' +
-    'iconURI="../media/extensions/wedo2-block-icon.svg" showStatusButton="true">' +
-    '<block type="extension_pen_down" id="extension_pen_down"></block>' +
-    '<block type="extension_music_drum" id="extension_music_drum">' +
-      '<value name="NUMBER">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">1</field>' +
-        '</shadow>' +
-      '</value>' +
-      '</block>' +
-    '<block type="extension_wedo_motor" id="extension_wedo_motor"></block>' +
-    '<block type="extension_wedo_hat" id="extension_wedo_hat"></block>' +
-    '<block type="extension_wedo_boolean" id="extension_wedo_boolean"></block>' +
-    '<block type="extension_wedo_tilt_reporter" id="extension_wedo_reporter">' +
-      '<value name="TILT">' +
-        '<shadow type="extension_wedo_tilt_menu"></shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="extension_music_reporter" id="extension_music_reporter"></block>' +
-    '<block type="extension_microbit_display" id="extension_microbit_display">' +
-      '<value name="MATRIX">' +
-        '<shadow type="matrix">' +
-          '<field name="MATRIX">0101010101100010101000100</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-    '<block type="extension_music_play_note" id="extension_music_play_note">' +
-      '<value name="NOTE">' +
-        '<shadow type="note">' +
-          '<field name="NOTE">60</field>' +
-        '</shadow>' +
-      '</value>' +
-      '<value name="BEATS">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">0.25</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
-  '</category>' +
   '</xml>';
