@@ -50,9 +50,11 @@
 
 - `CONTROL_WAIT_MILLISECONDS = "wait %1 milliseconds"`
 
-### 4.2 再补运行时 locale（按产品要求）
+### 4.2 再补运行时 locale（强制要求）
 
-在 `msg/scratch_msgs.js` 中补齐产品要求的语言键。本次至少支持：
+在 `msg/scratch_msgs.js` 中补齐产品要求的语言键。**这是强制项，不可省略。**
+
+> 必须支持以下语言（提交前必须全部覆盖）：
 
 - `zh-cn`
 - `zh-tw`
@@ -63,6 +65,8 @@
 - `ko`（映射 `ko-KR`）
 - `fr`（映射 `fr-FR`）
 - `de`（映射 `de-DE`）
+
+若上述任一语言缺失 `CONTROL_WAIT_MILLISECONDS`，则该需求视为未完成。
 
 统一新增键：
 
@@ -93,6 +97,8 @@
    - 切换目标语言后文案正确显示
 4. 计数验证（可选）
    - `CONTROL_WAIT_MILLISECONDS` 在目标 locale 数量符合预期
+5. 强制语言验证（必须）
+   - `zh-cn / zh-tw / en / es / pt-br / ja / ko / fr / de` 全部存在对应翻译
 
 ## 7. 推荐执行顺序（实操版）
 

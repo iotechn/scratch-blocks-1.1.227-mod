@@ -264,6 +264,18 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
   '</category>' +
   '<category name="%{BKY_CATEGORY_HARDWARE}" id="hardware" colour="#4C97FF" secondaryColour="#3373CC">' +
     '<block type="gpio_set_mode" id="gpio_set_mode"></block>' +
+    '<block type="gpio_set_pin" id="gpio_set_pin"></block>' +
+    '<block type="gpio_read_pin_high" id="gpio_read_pin_high"></block>' +
+    '<block type="gpio_read_pin_low" id="gpio_read_pin_low"></block>' +
+    '<block type="gpio_set_servo_mode" id="gpio_set_servo_mode"></block>' +
+    '<block type="gpio_toggle_pin" id="gpio_toggle_pin"></block>' +
+    '<block type="control_servo" id="control_servo">' +
+      '<value name="ANGLE">' +
+        '<shadow type="math_whole_number">' +
+          '<field name="NUM">90</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
   '</category>' +
