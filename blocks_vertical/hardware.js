@@ -109,8 +109,8 @@ const defineGpioReadBooleanBlock = (blockType, trailingLabel) => {
         .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
         .appendField(trailingLabel);
 
-      this.setPreviousStatement(false);
-      this.setNextStatement(false);
+      this.setInputsInline(true);
+      this.setOutputShape(Blockly.OUTPUT_SHAPE_HEXAGONAL);
       this.setOutput(true, 'Boolean');
 
       this.setColour('#4C97FF');
