@@ -43,6 +43,7 @@ Blockly.Msg.CONTROL_STOP_ALL = 'all';
 Blockly.Msg.CONTROL_STOP_THIS = 'this script';
 Blockly.Msg.CONTROL_STOP_OTHER = 'other scripts in sprite';
 Blockly.Msg.CONTROL_WAIT = 'wait %1 seconds';
+Blockly.Msg.CONTROL_WAIT_MILLISECONDS = 'wait %1 milliseconds';
 Blockly.Msg.CONTROL_WAITUNTIL = 'wait until %1';
 Blockly.Msg.CONTROL_REPEATUNTIL = 'repeat until %1';
 Blockly.Msg.CONTROL_WHILE = 'while %1';

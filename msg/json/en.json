@@ -8,6 +8,7 @@
     "CONTROL_STOP_THIS": "this script",
     "CONTROL_STOP_OTHER": "other scripts in sprite",
     "CONTROL_WAIT": "wait %1 seconds",
+    "CONTROL_WAIT_MILLISECONDS": "wait %1 milliseconds",
     "CONTROL_WAITUNTIL": "wait until %1",
     "CONTROL_REPEATUNTIL": "repeat until %1",
     "CONTROL_WHILE": "while %1",

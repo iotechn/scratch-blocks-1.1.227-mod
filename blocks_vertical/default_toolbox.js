@@ -64,6 +64,13 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    '<block type="control_wait_milliseconds" id="control_wait_milliseconds">' +
+      '<value name="DURATION">' +
+        '<shadow type="math_whole_number">' +
+          '<field name="NUM">100</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
     '<block type="control_repeat" id="control_repeat">' +
       '<value name="TIMES">' +
         '<shadow type="math_whole_number">' +
