@@ -23,29 +23,6 @@ const GPIO_PIN_OPTIONS = [
   ['15', '15'],
   ['16', '16'],
   ['17', '17'],
-  ['18', '18'],
-  ['19', '19'],
-  ['20', '20'],
-  ['21', '21'],
-  ['22', '22'],
-  ['23', '23'],
-  ['24', '24'],
-  ['25', '25'],
-  ['26', '26'],
-  ['27', '27'],
-  ['28', '28'],
-  ['29', '29'],
-  ['30', '30'],
-  ['31', '31'],
-  ['32', '32'],
-  ['33', '33'],
-  ['34', '34'],
-  ['35', '35'],
-  ['36', '36'],
-  ['37', '37'],
-  ['38', '38'],
-  ['39', '39'],
-  ['40', '40'],
 ];
 
 const GPIO_BUS_OPTIONS = [
@@ -61,15 +38,15 @@ const GPIO_BUS_OPTIONS = [
 Blockly.Blocks['gpio_set_mode'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_MODE_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_MODE_MIDDLE)
-      .appendField(new Blockly.FieldDropdown([
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT, 'INPUT'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT, 'OUTPUT'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN']
-      ]), 'MODE');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_MODE_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_MODE_MIDDLE)
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT, 'INPUT'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT, 'OUTPUT'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN']
+        ]), 'MODE');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -86,16 +63,16 @@ Blockly.Blocks['gpio_set_mode'] = {
 Blockly.Blocks['gpio_bus_set_mode'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_MIDDLE)
-      .appendField(new Blockly.FieldDropdown([
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT, 'INPUT'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT, 'OUTPUT'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN'],
-        [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT_OPEN_DRAIN, 'OUTPUT_OPEN_DRAIN']
-      ]), 'MODE');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_MIDDLE)
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT, 'INPUT'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT, 'OUTPUT'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN'],
+          [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT_OPEN_DRAIN, 'OUTPUT_OPEN_DRAIN']
+        ]), 'MODE');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -112,12 +89,12 @@ Blockly.Blocks['gpio_bus_set_mode'] = {
 Blockly.Blocks['gpio_bus_write'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_PREFIX);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_PREFIX);
     this.appendValueInput('VALUE')
-      .setCheck('Number');
+        .setCheck('Number');
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_MIDDLE)
-      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_MIDDLE)
+        .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
 
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
@@ -135,8 +112,8 @@ Blockly.Blocks['gpio_bus_write'] = {
 Blockly.Blocks['gpio_bus_read'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_READ_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_READ_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
 
     this.setOutputShape(Blockly.OUTPUT_SHAPE_ROUND);
     this.setOutput(true, 'Number');
@@ -153,21 +130,21 @@ Blockly.Blocks['gpio_bus_read'] = {
 Blockly.Blocks['gpio_bus_shift'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
-      .appendField(new Blockly.FieldDropdown([
-        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_LEFT, 'LEFT'],
-        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_RIGHT, 'RIGHT']
-      ]), 'DIRECTION')
-      .appendField(new Blockly.FieldDropdown([
-        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_NON_ROTATE, 'NON_ROTATE'],
-        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_ROTATE, 'ROTATE']
-      ]), 'ROTATE')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_LEFT, 'LEFT'],
+          [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_RIGHT, 'RIGHT']
+        ]), 'DIRECTION')
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_NON_ROTATE, 'NON_ROTATE'],
+          [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_ROTATE, 'ROTATE']
+        ]), 'ROTATE')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY);
     this.appendValueInput('N')
-      .setCheck('Number');
+        .setCheck('Number');
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX);
 
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
@@ -185,8 +162,8 @@ Blockly.Blocks['gpio_bus_shift'] = {
 Blockly.Blocks['gpio_bus_not'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_NOT_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_NOT_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -203,13 +180,13 @@ Blockly.Blocks['gpio_bus_not'] = {
 Blockly.Blocks['gpio_set_pin'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_PIN_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_PIN_MIDDLE)
-      .appendField(new Blockly.FieldDropdown([
-        [Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH, 'HIGH'],
-        [Blockly.Msg.HARDWARE_GPIO_VALUE_LOW, 'LOW']
-      ]), 'VALUE');
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_PIN_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_PIN_MIDDLE)
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH, 'HIGH'],
+          [Blockly.Msg.HARDWARE_GPIO_VALUE_LOW, 'LOW']
+        ]), 'VALUE');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -222,14 +199,16 @@ Blockly.Blocks['gpio_set_pin'] = {
  * 读取 GPIO：是否为高电平 / 是否为低电平。
  * 积木类型：gpio_read_pin_high / gpio_read_pin_low
  * 返回值：Boolean
+ * @param {string} blockType Block type identifier.
+ * @param {string} trailingLabel Localized trailing field label.
  */
 const defineGpioReadBooleanBlock = (blockType, trailingLabel) => {
   Blockly.Blocks[blockType] = {
     init: function() {
       this.appendDummyInput()
-        .appendField(Blockly.Msg.HARDWARE_GPIO_READ_PIN_PREFIX)
-        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-        .appendField(trailingLabel);
+          .appendField(Blockly.Msg.HARDWARE_GPIO_READ_PIN_PREFIX)
+          .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+          .appendField(trailingLabel);
 
       this.setInputsInline(true);
       this.setOutputShape(Blockly.OUTPUT_SHAPE_HEXAGONAL);
@@ -251,9 +230,9 @@ defineGpioReadBooleanBlock('gpio_read_pin_low', Blockly.Msg.HARDWARE_GPIO_READ_P
 Blockly.Blocks['gpio_set_servo_mode'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_SUFFIX);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_SUFFIX);
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -270,9 +249,9 @@ Blockly.Blocks['gpio_set_servo_mode'] = {
 Blockly.Blocks['gpio_toggle_pin'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-      .appendField(Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_SUFFIX);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_SUFFIX);
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -289,13 +268,13 @@ Blockly.Blocks['gpio_toggle_pin'] = {
 Blockly.Blocks['control_servo'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_PREFIX)
-      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN');
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_PREFIX)
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN');
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_ANGLE_LABEL);
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_ANGLE_LABEL);
     this.appendValueInput('ANGLE');
     this.appendDummyInput()
-      .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_DEGREE_SUFFIX);
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_DEGREE_SUFFIX);
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
