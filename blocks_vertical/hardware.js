@@ -48,6 +48,11 @@ const GPIO_PIN_OPTIONS = [
   ['40', '40'],
 ];
 
+const GPIO_BUS_OPTIONS = [
+  ['B1', 'B1'],
+  ['B2', 'B2'],
+];
+
 /**
  * 设置 GPIO 引脚模式。
  * 积木类型：gpio_set_mode
@@ -65,6 +70,123 @@ Blockly.Blocks['gpio_set_mode'] = {
         [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
         [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN']
       ]), 'MODE');
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
+ * Set a GPIO bus mode.
+ * Block type: gpio_bus_set_mode
+ * Parameters: BUS (B1/B2), MODE.
+ */
+Blockly.Blocks['gpio_bus_set_mode'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_PREFIX)
+      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_MIDDLE)
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT, 'INPUT'],
+        [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT, 'OUTPUT'],
+        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP, 'INPUT_PULLUP'],
+        [Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN, 'INPUT_PULLDOWN'],
+        [Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT_OPEN_DRAIN, 'OUTPUT_OPEN_DRAIN']
+      ]), 'MODE');
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
+ * Write a numeric value to a GPIO bus.
+ * Block type: gpio_bus_write
+ * Parameters: BUS (B1/B2), VALUE (numeric expression).
+ */
+Blockly.Blocks['gpio_bus_write'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_PREFIX);
+    this.appendValueInput('VALUE')
+      .setCheck('Number');
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_MIDDLE)
+      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
+ * Read a GPIO bus value.
+ * Block type: gpio_bus_read
+ * Parameters: BUS (B1/B2).
+ */
+Blockly.Blocks['gpio_bus_read'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_READ_PREFIX)
+      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
+
+    this.setOutputShape(Blockly.OUTPUT_SHAPE_ROUND);
+    this.setOutput(true, 'Number');
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
+ * Shift or rotate a GPIO bus.
+ * Block type: gpio_bus_shift
+ * Parameters: BUS (B1/B2), DIRECTION, ROTATE, N (numeric expression).
+ */
+Blockly.Blocks['gpio_bus_shift'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_PREFIX)
+      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS')
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_LEFT, 'LEFT'],
+        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_RIGHT, 'RIGHT']
+      ]), 'DIRECTION')
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_NON_ROTATE, 'NON_ROTATE'],
+        [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_ROTATE, 'ROTATE']
+      ]), 'ROTATE')
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY);
+    this.appendValueInput('N')
+      .setCheck('Number');
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX);
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
+ * Apply bitwise NOT to a GPIO bus.
+ * Block type: gpio_bus_not
+ * Parameters: BUS (B1/B2).
+ */
+Blockly.Blocks['gpio_bus_not'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_NOT_PREFIX)
+      .appendField(new Blockly.FieldDropdown(GPIO_BUS_OPTIONS), 'BUS');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);

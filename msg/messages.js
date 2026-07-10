@@ -299,6 +299,7 @@ Blockly.Msg.HARDWARE_GPIO_MODE_INPUT = 'input';
 Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT = 'output';
 Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLUP = 'input pull-up';
 Blockly.Msg.HARDWARE_GPIO_MODE_INPUT_PULLDOWN = 'input pull-down';
+Blockly.Msg.HARDWARE_GPIO_MODE_OUTPUT_OPEN_DRAIN = 'output open-drain';
 Blockly.Msg.HARDWARE_GPIO_SET_PIN_PREFIX = 'set GPIO pin';
 Blockly.Msg.HARDWARE_GPIO_SET_PIN_MIDDLE = 'to';
 Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH = 'high';
@@ -313,6 +314,19 @@ Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_SUFFIX = 'level';
 Blockly.Msg.HARDWARE_CONTROL_SERVO_PREFIX = 'set servo pin';
 Blockly.Msg.HARDWARE_CONTROL_SERVO_ANGLE_LABEL = 'angle to';
 Blockly.Msg.HARDWARE_CONTROL_SERVO_DEGREE_SUFFIX = 'degrees';
+Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_PREFIX = 'set bus';
+Blockly.Msg.HARDWARE_GPIO_BUS_SET_MODE_MIDDLE = 'mode to';
+Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_PREFIX = 'write';
+Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_MIDDLE = 'to bus';
+Blockly.Msg.HARDWARE_GPIO_BUS_READ_PREFIX = 'read bus';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_PREFIX = 'shift bus';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_LEFT = 'left';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_RIGHT = 'right';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_NON_ROTATE = 'without rotation';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_ROTATE = 'with rotation';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY = 'by';
+Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX = 'bits';
+Blockly.Msg.HARDWARE_GPIO_BUS_NOT_PREFIX = 'bitwise NOT of bus';
 
 // Context menus
 Blockly.Msg.DUPLICATE = 'Duplicate';
