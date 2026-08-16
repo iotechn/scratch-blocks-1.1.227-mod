@@ -271,8 +271,6 @@ Blockly.Procedures.addCreateButton_ = function(workspace, xmlList) {
   };
   addButton(Blockly.Msg.NEW_PROCEDURE || 'Make a Block',
       'CREATE_PROCEDURE', '');
-  addButton(Blockly.Msg.NEW_VALUE_PROCEDURE || '\u65b0\u5efa\u503c\u79ef\u6728',
-      'CREATE_REPORTER_PROCEDURE', 'i32');
 };
 
 /**
