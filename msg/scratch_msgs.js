@@ -5514,6 +5514,8 @@ Blockly.ScratchMsgs.locales["en"] =
     "CANNOT_DELETE_VARIABLE_PROCEDURE": "Can't delete the variable \"%1\" because it's part of the definition of the function \"%2\"",
     "DELETE_VARIABLE": "Delete the \"%1\" variable",
     "NEW_PROCEDURE": "Make a Block",
+    "NEW_VALUE_PROCEDURE": "Make a Value Block",
+    "PROCEDURES_RETURN": "return",
     "PROCEDURE_ALREADY_EXISTS": "A procedure named \"%1\" already exists.",
     "PROCEDURE_DEFAULT_NAME": "block name",
     "PROCEDURE_USED": "To delete a block definition, first remove all uses of the block",
@@ -22950,6 +22952,8 @@ Blockly.ScratchMsgs.locales["zh-cn"] =
     "CANNOT_DELETE_VARIABLE_PROCEDURE": "无法删除变量「%1」，因为函数「%2」的定义中用到了它",
     "DELETE_VARIABLE": "删除变量「%1」",
     "NEW_PROCEDURE": "制作新的积木",
+    "NEW_VALUE_PROCEDURE": "新建值积木",
+    "PROCEDURES_RETURN": "返回",
     "PROCEDURE_ALREADY_EXISTS": "已经存在名为「%1」的程序。",
     "PROCEDURE_DEFAULT_NAME": "积木名称",
     "PROCEDURE_USED": "在删除一个积木定义前，请先把该积木从所有使用的地方删除。",
@@ -23273,6 +23277,8 @@ Blockly.ScratchMsgs.locales["zh-tw"] =
     "CANNOT_DELETE_VARIABLE_PROCEDURE": "無法刪除變數「%1」，因為它是函式「%2」定義中的一部分。",
     "DELETE_VARIABLE": "刪除變數「%1」",
     "NEW_PROCEDURE": "建立一個積木",
+    "NEW_VALUE_PROCEDURE": "建立一個值積木",
+    "PROCEDURES_RETURN": "返回",
     "PROCEDURE_ALREADY_EXISTS": "程序名稱「%1」已經被使用。",
     "PROCEDURE_DEFAULT_NAME": "積木名稱",
     "PROCEDURE_USED": "刪除某個積木的定義之前，要先把正在使用中的先移除",
@@ -23291,6 +23297,18 @@ Blockly.ScratchMsgs.locales["zh-tw"] =
     "DEFAULT_BROADCAST_MESSAGE_NAME": "message1"
 };
 // End of combined translations
+
+// Custom reporter strings are local extensions.  Keep every bundled locale
+// complete even when Scratch's upstream translation catalog has no entry yet.
+Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
+  var messages = Blockly.ScratchMsgs.locales[locale];
+  if (!messages.NEW_VALUE_PROCEDURE) {
+    messages.NEW_VALUE_PROCEDURE = 'Make a Value Block';
+  }
+  if (!messages.PROCEDURES_RETURN) {
+    messages.PROCEDURES_RETURN = 'return';
+  }
+});
 
 // Locale aliases for full BCP-47 tags used by host apps.
 Blockly.ScratchMsgs.locales['zh-CN'] = Blockly.ScratchMsgs.locales['zh-cn'];
