@@ -228,6 +228,10 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   mutations = Blockly.Procedures.sortProcedureMutations_(mutations);
   for (var i = 0; i < mutations.length; i++) {
     var mutation = mutations[i];
+    var returnType = mutation.getAttribute('returntype');
+    if (returnType !== 'i32' && returnType !== 'bool') {
+      continue;
+    }
     // <block type="procedures_call">
     //   <mutation ...></mutation>
     // </block>
@@ -236,6 +240,11 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
     block.setAttribute('gap', 16);
     block.appendChild(mutation);
     xmlList.push(block);
+
+    var returnBlock = goog.dom.createDom('block');
+    returnBlock.setAttribute('type', 'procedures_return');
+    returnBlock.setAttribute('gap', 24);
+    xmlList.push(returnBlock);
   }
   return xmlList;
 };
@@ -247,16 +256,17 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
  * @private
  */
 Blockly.Procedures.addCreateButton_ = function(workspace, xmlList) {
-  var button = goog.dom.createDom('button');
-  var msg = Blockly.Msg.NEW_PROCEDURE;
-  var callbackKey = 'CREATE_PROCEDURE';
-  var callback = function() {
-    Blockly.Procedures.createProcedureDefCallback_(workspace);
+  var addButton = function(text, callbackKey, returnType) {
+    var button = goog.dom.createDom('button');
+    button.setAttribute('text', text);
+    button.setAttribute('callbackKey', callbackKey);
+    workspace.registerButtonCallback(callbackKey, function() {
+      Blockly.Procedures.createProcedureDefCallback_(workspace, returnType);
+    });
+    xmlList.push(button);
   };
-  button.setAttribute('text', msg);
-  button.setAttribute('callbackKey', callbackKey);
-  workspace.registerButtonCallback(callbackKey, callback);
-  xmlList.push(button);
+  addButton(Blockly.Msg.NEW_VALUE_PROCEDURE || '\u65b0\u5efa\u503c\u79ef\u6728',
+      'CREATE_REPORTER_PROCEDURE', 'i32');
 };
 
 /**
@@ -371,13 +381,15 @@ Blockly.Procedures.getPrototypeBlock = function(procCode, workspace) {
  * @return {Element} The mutation for a new custom procedure
  * @package
  */
-Blockly.Procedures.newProcedureMutation = function() {
+Blockly.Procedures.newProcedureMutation = function(opt_returnType) {
   var mutationText = '<xml>' +
       '<mutation' +
       ' proccode="' + Blockly.Msg['PROCEDURE_DEFAULT_NAME'] + '"' +
       ' argumentids="[]"' +
       ' argumentnames="[]"' +
       ' argumentdefaults="[]"' +
+      ' procedureid="' + Blockly.utils.genUid() + '"' +
+      ' returntype="' + (opt_returnType || '') + '"' +
       ' warp="false">' +
       '</mutation>' +
       '</xml>';
@@ -389,9 +401,9 @@ Blockly.Procedures.newProcedureMutation = function() {
  * @param {!Blockly.Workspace} workspace The workspace to create the new procedure on.
  * @private
  */
-Blockly.Procedures.createProcedureDefCallback_ = function(workspace) {
+Blockly.Procedures.createProcedureDefCallback_ = function(workspace, opt_returnType) {
   Blockly.Procedures.externalProcedureDefCallback(
-      Blockly.Procedures.newProcedureMutation(),
+      Blockly.Procedures.newProcedureMutation(opt_returnType),
       Blockly.Procedures.createProcedureCallbackFactory_(workspace)
   );
 };
