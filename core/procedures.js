@@ -244,6 +244,7 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
     var returnBlock = goog.dom.createDom('block');
     returnBlock.setAttribute('type', 'procedures_return');
     returnBlock.setAttribute('gap', 24);
+    returnBlock.appendChild(mutation.cloneNode(false));
     xmlList.push(returnBlock);
   }
   return xmlList;
@@ -443,6 +444,9 @@ Blockly.Procedures.createProcedureCallbackFactory_ = function(workspace) {
       block.moveBy(posX / scale, (-workspace.scrollY + 30) / scale);
       block.scheduleSnapAndBump();
       Blockly.Events.setGroup(false);
+      // PROCEDURE is a dynamic category.  Refresh the selected flyout after
+      // inserting a definition so its caller appears immediately.
+      workspace.refreshToolboxSelection_();
     }
   };
 };
