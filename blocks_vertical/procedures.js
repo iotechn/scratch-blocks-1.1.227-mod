@@ -985,6 +985,20 @@ Blockly.Blocks['procedures_return'] = {
     this.setNextStatement(false);
     this.setColour(Blockly.Colours.more.primary);
     this.setTooltip('Return a value from this custom reporter');
+    this.procedureId_ = '';
+    this.returnType_ = '';
+  },
+  mutationToDom: function() {
+    var mutation = document.createElement('mutation');
+    mutation.setAttribute('procedureid', this.procedureId_ || '');
+    mutation.setAttribute('returntype', this.returnType_ || '');
+    return mutation;
+  },
+  domToMutation: function(xmlElement) {
+    this.procedureId_ = xmlElement.getAttribute('procedureid') || '';
+    this.returnType_ = xmlElement.getAttribute('returntype') || '';
+    this.getInput('VALUE').setCheck(
+        this.returnType_ === 'bool' ? 'Boolean' : null);
   }
 };
 
