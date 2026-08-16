@@ -226,12 +226,10 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   // Create call blocks for each procedure defined in the workspace
   var mutations = Blockly.Procedures.allProcedureMutations(workspace);
   mutations = Blockly.Procedures.sortProcedureMutations_(mutations);
+  var reporterMutation = null;
   for (var i = 0; i < mutations.length; i++) {
     var mutation = mutations[i];
     var returnType = mutation.getAttribute('returntype');
-    if (returnType !== 'i32' && returnType !== 'bool') {
-      continue;
-    }
     // <block type="procedures_call">
     //   <mutation ...></mutation>
     // </block>
@@ -241,10 +239,15 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
     block.appendChild(mutation);
     xmlList.push(block);
 
+    if (!reporterMutation && (returnType === 'i32' || returnType === 'bool')) {
+      reporterMutation = mutation;
+    }
+  }
+  if (reporterMutation) {
     var returnBlock = goog.dom.createDom('block');
     returnBlock.setAttribute('type', 'procedures_return');
     returnBlock.setAttribute('gap', 24);
-    returnBlock.appendChild(mutation.cloneNode(false));
+    returnBlock.appendChild(reporterMutation.cloneNode(false));
     xmlList.push(returnBlock);
   }
   return xmlList;
@@ -266,6 +269,8 @@ Blockly.Procedures.addCreateButton_ = function(workspace, xmlList) {
     });
     xmlList.push(button);
   };
+  addButton(Blockly.Msg.NEW_PROCEDURE || 'Make a Block',
+      'CREATE_PROCEDURE', '');
   addButton(Blockly.Msg.NEW_VALUE_PROCEDURE || '\u65b0\u5efa\u503c\u79ef\u6728',
       'CREATE_REPORTER_PROCEDURE', 'i32');
 };
