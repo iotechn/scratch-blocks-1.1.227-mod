@@ -362,6 +362,7 @@ Blockly.ScratchBlocks.ProcedureUtils.attachShadow_ = function(input,
  *     'n' (number).
  * @param {string} displayName The name of the argument as provided by the
  *     user, which becomes the text of the label on the argument reporter block.
+ * @param {string} argumentId Stable identifier for the argument.
  * @return {!Blockly.BlockSvg} The newly created argument reporter block.
  * @private
  * @this Blockly.Block
