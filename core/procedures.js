@@ -378,6 +378,7 @@ Blockly.Procedures.getPrototypeBlock = function(procCode, workspace) {
 
 /**
  * Create a mutation for a brand new custom procedure.
+ * @param {string=} opt_returnType Optional reporter return type.
  * @return {Element} The mutation for a new custom procedure
  * @package
  */
@@ -399,6 +400,7 @@ Blockly.Procedures.newProcedureMutation = function(opt_returnType) {
 /**
  * Callback to create a new procedure custom command block.
  * @param {!Blockly.Workspace} workspace The workspace to create the new procedure on.
+ * @param {string=} opt_returnType Optional reporter return type.
  * @private
  */
 Blockly.Procedures.createProcedureDefCallback_ = function(workspace, opt_returnType) {
