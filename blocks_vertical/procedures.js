@@ -979,7 +979,7 @@ Blockly.Blocks['argument_reporter_string_number'] = {
 Blockly.Blocks['procedures_return'] = {
   init: function() {
     this.appendValueInput('VALUE').appendField(
-        Blockly.Msg.PROCEDURES_RETURN || '\u8fd4\u56de');
+        Blockly.Msg.PROCEDURES_RETURN, 'RETURN_LABEL');
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(false);

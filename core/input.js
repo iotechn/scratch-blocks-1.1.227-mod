@@ -59,11 +59,29 @@ Blockly.Input = function(type, name, block, connection) {
   this.fieldRow = [];
 
   /**
+   * Whether this input must start a new visual row in vertical rendering.
+   * @type {boolean}
+   */
+  this.lineBreakBefore = false;
+
+  /**
    * The shape that is displayed when this input is rendered but not filled.
    * @type {SVGElement}
    * @package
    */
   this.outlinePath = null;
+};
+
+/**
+ * Force this input to start a new visual row in the vertical renderer.
+ * This is useful when several dummy/value inputs should remain separate even
+ * though the renderer normally groups consecutive inputs together.
+ * @param {boolean} lineBreak True to start a new row before this input.
+ * @return {!Blockly.Input} The input being modified (to allow chaining).
+ */
+Blockly.Input.prototype.setLineBreak = function(lineBreak) {
+  this.lineBreakBefore = !!lineBreak;
+  return this;
 };
 
 /**

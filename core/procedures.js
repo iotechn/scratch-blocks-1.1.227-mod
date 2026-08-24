@@ -226,7 +226,11 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   // Create call blocks for each procedure defined in the workspace
   var mutations = Blockly.Procedures.allProcedureMutations(workspace);
   mutations = Blockly.Procedures.sortProcedureMutations_(mutations);
-  var reporterMutation = null;
+  // Keep one mutation for each supported reporter type.  A single generic
+  // return block is not enough when a workspace contains both numeric and
+  // boolean custom procedures because the input shape is derived from the
+  // mutation's returntype.
+  var reporterMutations = {};
   for (var i = 0; i < mutations.length; i++) {
     var mutation = mutations[i];
     var returnType = mutation.getAttribute('returntype');
@@ -239,17 +243,21 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
     block.appendChild(mutation);
     xmlList.push(block);
 
-    if (!reporterMutation && (returnType === 'i32' || returnType === 'bool')) {
-      reporterMutation = mutation;
+    if ((returnType === 'i32' || returnType === 'bool') &&
+        !reporterMutations[returnType]) {
+      reporterMutations[returnType] = mutation;
     }
   }
-  if (reporterMutation) {
-    var returnBlock = goog.dom.createDom('block');
-    returnBlock.setAttribute('type', 'procedures_return');
-    returnBlock.setAttribute('gap', 24);
-    returnBlock.appendChild(reporterMutation.cloneNode(false));
-    xmlList.push(returnBlock);
-  }
+  ['i32', 'bool'].forEach(function(returnType) {
+    var reporterMutation = reporterMutations[returnType];
+    if (reporterMutation) {
+      var returnBlock = goog.dom.createDom('block');
+      returnBlock.setAttribute('type', 'procedures_return');
+      returnBlock.setAttribute('gap', 24);
+      returnBlock.appendChild(reporterMutation.cloneNode(false));
+      xmlList.push(returnBlock);
+    }
+  });
   return xmlList;
 };
 

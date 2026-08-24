@@ -805,7 +805,7 @@ Blockly.BlockSvg.prototype.renderCompute_ = function(iconWidth) {
     // In all other cases, statement and value inputs catch all preceding dummy
     // inputs, and cause a line break before following inputs.
     if (!isSecondInputOnProcedure &&
-        (!lastType || lastType == Blockly.NEXT_STATEMENT ||
+        (input.lineBreakBefore || !lastType || lastType == Blockly.NEXT_STATEMENT ||
         input.type == Blockly.NEXT_STATEMENT)) {
       lastType = input.type;
       row = this.createRowForInput_(input);
