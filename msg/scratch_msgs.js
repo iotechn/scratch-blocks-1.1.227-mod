@@ -23298,16 +23298,86 @@ Blockly.ScratchMsgs.locales["zh-tw"] =
 };
 // End of combined translations
 
-// Custom reporter strings are local extensions.  Keep every bundled locale
-// complete even when Scratch's upstream translation catalog has no entry yet.
+// Custom reporter strings are local extensions. Scratch's upstream catalog
+// has no translations for them, so keep application locales explicit here.
+var customReporterMessages = {
+  'zh-cn': {NEW_VALUE_PROCEDURE: '新建值积木', PROCEDURES_RETURN: '返回'},
+  'zh-tw': {NEW_VALUE_PROCEDURE: '建立一個值積木', PROCEDURES_RETURN: '回傳'},
+  'en': {NEW_VALUE_PROCEDURE: 'Make a Value Block', PROCEDURES_RETURN: 'return'},
+  'es': {NEW_VALUE_PROCEDURE: 'Crear un bloque de valor', PROCEDURES_RETURN: 'devolver'},
+  'pt-br': {NEW_VALUE_PROCEDURE: 'Criar um bloco de valor', PROCEDURES_RETURN: 'retornar'},
+  'ja': {NEW_VALUE_PROCEDURE: '値ブロックを作る', PROCEDURES_RETURN: '戻り値'},
+  'ko': {NEW_VALUE_PROCEDURE: '값 블록 만들기', PROCEDURES_RETURN: '반환'},
+  'fr': {NEW_VALUE_PROCEDURE: 'Créer un bloc de valeur', PROCEDURES_RETURN: 'renvoyer'},
+  'de': {NEW_VALUE_PROCEDURE: 'Wertblock erstellen', PROCEDURES_RETURN: 'zurückgeben'}
+};
+Object.keys(customReporterMessages).forEach(function(locale) {
+  Object.assign(Blockly.ScratchMsgs.locales[locale], customReporterMessages[locale]);
+});
+
+// GPIO bus display labels are application extensions. Keep a translated set
+// for the host application's supported locales and an English fallback for
+// every other bundled locale.
+var gpioBusDisplayMessages = {
+  'zh-cn': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: '显示',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: '十进制',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: '十六进制',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: '二进制'
+  },
+  'zh-tw': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: '顯示',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: '十進位',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: '十六進位',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: '二進位'
+  },
+  'en': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: 'Display',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: 'Decimal',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: 'Hexadecimal',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: 'Binary'
+  },
+  'es': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: 'Mostrar',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: 'Decimal',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: 'Hexadecimal',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: 'Binario'
+  },
+  'pt-br': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: 'Exibir',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: 'Decimal',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: 'Hexadecimal',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: 'Binário'
+  },
+  'ja': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: '表示',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: '10進数',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: '16進数',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: '2進数'
+  },
+  'ko': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: '표시',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: '10진수',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: '16진수',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: '2진수'
+  },
+  'fr': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: 'Afficher',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: 'Décimal',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: 'Hexadécimal',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: 'Binaire'
+  },
+  'de': {
+    HARDWARE_GPIO_BUS_WRITE_DISPLAY: 'Anzeige',
+    HARDWARE_GPIO_BUS_DISPLAY_DEC: 'Dezimal',
+    HARDWARE_GPIO_BUS_DISPLAY_HEX: 'Hexadezimal',
+    HARDWARE_GPIO_BUS_DISPLAY_BIN: 'Binär'
+  }
+};
+var gpioBusDisplayFallback = gpioBusDisplayMessages.en;
 Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
-  var messages = Blockly.ScratchMsgs.locales[locale];
-  if (!messages.NEW_VALUE_PROCEDURE) {
-    messages.NEW_VALUE_PROCEDURE = 'Make a Value Block';
-  }
-  if (!messages.PROCEDURES_RETURN) {
-    messages.PROCEDURES_RETURN = 'return';
-  }
+  var messages = gpioBusDisplayMessages[locale] || gpioBusDisplayFallback;
+  Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
 });
 
 // Locale aliases for full BCP-47 tags used by host apps.
