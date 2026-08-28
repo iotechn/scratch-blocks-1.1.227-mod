@@ -23301,15 +23301,15 @@ Blockly.ScratchMsgs.locales["zh-tw"] =
 // Custom reporter strings are local extensions. Scratch's upstream catalog
 // has no translations for them, so keep application locales explicit here.
 var customReporterMessages = {
-  'zh-cn': {NEW_VALUE_PROCEDURE: '新建值积木', PROCEDURES_RETURN: '返回'},
-  'zh-tw': {NEW_VALUE_PROCEDURE: '建立一個值積木', PROCEDURES_RETURN: '回傳'},
-  'en': {NEW_VALUE_PROCEDURE: 'Make a Value Block', PROCEDURES_RETURN: 'return'},
-  'es': {NEW_VALUE_PROCEDURE: 'Crear un bloque de valor', PROCEDURES_RETURN: 'devolver'},
-  'pt-br': {NEW_VALUE_PROCEDURE: 'Criar um bloco de valor', PROCEDURES_RETURN: 'retornar'},
-  'ja': {NEW_VALUE_PROCEDURE: '値ブロックを作る', PROCEDURES_RETURN: '戻り値'},
-  'ko': {NEW_VALUE_PROCEDURE: '값 블록 만들기', PROCEDURES_RETURN: '반환'},
-  'fr': {NEW_VALUE_PROCEDURE: 'Créer un bloc de valeur', PROCEDURES_RETURN: 'renvoyer'},
-  'de': {NEW_VALUE_PROCEDURE: 'Wertblock erstellen', PROCEDURES_RETURN: 'zurückgeben'}
+  'zh-cn': {NEW_VALUE_PROCEDURE: '新建值积木', PROCEDURES_RETURN: '返回', PROCEDURES_RETURN_DISPLAY: '显示'},
+  'zh-tw': {NEW_VALUE_PROCEDURE: '建立一個值積木', PROCEDURES_RETURN: '回傳', PROCEDURES_RETURN_DISPLAY: '顯示'},
+  'en': {NEW_VALUE_PROCEDURE: 'Make a Value Block', PROCEDURES_RETURN: 'return', PROCEDURES_RETURN_DISPLAY: 'Display'},
+  'es': {NEW_VALUE_PROCEDURE: 'Crear un bloque de valor', PROCEDURES_RETURN: 'devolver', PROCEDURES_RETURN_DISPLAY: 'Mostrar'},
+  'pt-br': {NEW_VALUE_PROCEDURE: 'Criar um bloco de valor', PROCEDURES_RETURN: 'retornar', PROCEDURES_RETURN_DISPLAY: 'Exibir'},
+  'ja': {NEW_VALUE_PROCEDURE: '値ブロックを作る', PROCEDURES_RETURN: '戻り値', PROCEDURES_RETURN_DISPLAY: '表示'},
+  'ko': {NEW_VALUE_PROCEDURE: '값 블록 만들기', PROCEDURES_RETURN: '반환', PROCEDURES_RETURN_DISPLAY: '표시'},
+  'fr': {NEW_VALUE_PROCEDURE: 'Créer un bloc de valeur', PROCEDURES_RETURN: 'renvoyer', PROCEDURES_RETURN_DISPLAY: 'Afficher'},
+  'de': {NEW_VALUE_PROCEDURE: 'Wertblock erstellen', PROCEDURES_RETURN: 'zurückgeben', PROCEDURES_RETURN_DISPLAY: 'Anzeige'}
 };
 Object.keys(customReporterMessages).forEach(function(locale) {
   Object.assign(Blockly.ScratchMsgs.locales[locale], customReporterMessages[locale]);

@@ -976,6 +976,138 @@ Blockly.Blocks['argument_reporter_string_number'] = {
   domToMutation: Blockly.ScratchBlocks.ProcedureUtils.argumentReporterDomToMutation
 };
 
+const PROCEDURES_RETURN_DISPLAY_OPTIONS = () => [
+  [Blockly.Msg.HARDWARE_GPIO_BUS_DISPLAY_DEC || 'Decimal', 'DEC'],
+  [Blockly.Msg.HARDWARE_GPIO_BUS_DISPLAY_HEX || 'Hexadecimal', 'HEX'],
+  [Blockly.Msg.HARDWARE_GPIO_BUS_DISPLAY_BIN || 'Binary', 'BIN'],
+];
+
+const clampProcedureReturnI32 = (value) => {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  return Math.max(-2147483648, Math.min(2147483647, Math.trunc(number)));
+};
+
+const parseProcedureReturnI32 = (value, mode) => {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  if (!text) return null;
+  const sign = text.startsWith('-') ? -1 : 1;
+  const unsignedText = text.replace(/^[+-]/, '');
+
+  if (mode === 'HEX') {
+    const digits = unsignedText.replace(/^0x/i, '');
+    if (!/^[0-9a-fA-F]+$/.test(digits)) return null;
+    return clampProcedureReturnI32(sign * parseInt(digits, 16));
+  }
+  if (mode === 'BIN') {
+    const digits = unsignedText.replace(/^0b/i, '');
+    if (!/^[01]+$/.test(digits)) return null;
+    return clampProcedureReturnI32(sign * parseInt(digits, 2));
+  }
+  if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(text)) {
+    return null;
+  }
+  return clampProcedureReturnI32(Number(text));
+};
+
+const getProcedureReturnDisplayMode = (block) =>
+  block && block.getFieldValue('DISPLAY') || 'DEC';
+
+const formatProcedureReturnI32 = (value, mode) => {
+  const integer = clampProcedureReturnI32(value);
+  const sign = integer < 0 ? '-' : '';
+  const magnitude = Math.abs(integer);
+  if (mode === 'HEX') {
+    const digits = magnitude.toString(16).toUpperCase();
+    return sign + '0x' + digits.padStart(Math.ceil(digits.length / 2) * 2, '0');
+  }
+  if (mode === 'BIN') {
+    const digits = magnitude.toString(2);
+    return sign + '0b' + digits.padStart(Math.ceil(digits.length / 8) * 8, '0');
+  }
+  return String(integer);
+};
+
+const PROCEDURES_RETURN_INPUT_RESTRICTOR = /[0-9a-fA-FxXbB.+\-eE]/;
+
+const installProcedureReturnI32Validator = (block) => {
+  if (!block || block.returnType_ !== 'i32') return;
+  const input = block.getInput('VALUE');
+  const target = input && input.connection && input.connection.targetBlock();
+  const field = target && target.type === 'math_number' && target.getField
+    ? target.getField('NUM')
+    : null;
+  if (!field) return;
+
+  field.procedureReturnBlock_ = block;
+  if (!field.procedureReturnI32ValidatorInstalled) {
+    const originalSetText = field.setText;
+    field.procedureReturnI32Value_ = parseProcedureReturnI32(
+        field.getText(), getProcedureReturnDisplayMode(block));
+    if (field.procedureReturnI32Value_ === null) field.procedureReturnI32Value_ = 0;
+    field.setRestrictor(PROCEDURES_RETURN_INPUT_RESTRICTOR);
+    field.getValue = function() {
+      return String(clampProcedureReturnI32(this.procedureReturnI32Value_));
+    };
+    field.setText = function(newText) {
+      if (newText !== null && newText !== undefined) {
+        const text = String(newText);
+        if (this.procedureReturnI32CanonicalText_ === text) {
+          this.procedureReturnI32CanonicalText_ = null;
+        } else {
+          const parsed = parseProcedureReturnI32(
+              text, getProcedureReturnDisplayMode(this.procedureReturnBlock_));
+          if (parsed !== null) this.procedureReturnI32Value_ = parsed;
+        }
+      }
+      return originalSetText.call(this, newText);
+    };
+    field.setValidator(function(value) {
+      const parsed = parseProcedureReturnI32(
+          value, getProcedureReturnDisplayMode(this.procedureReturnBlock_));
+      if (parsed === null) return null;
+      this.procedureReturnI32Value_ = parsed;
+      this.procedureReturnI32CanonicalText_ = String(parsed);
+      return this.procedureReturnI32CanonicalText_;
+    });
+    field.procedureReturnI32ValidatorInstalled = true;
+  }
+
+  if (!field.procedureReturnI32FormatterInstalled) {
+    field.getDisplayText_ = function() {
+      return formatProcedureReturnI32(
+          this.procedureReturnI32Value_, getProcedureReturnDisplayMode(this.procedureReturnBlock_));
+    };
+    const originalShowEditor = field.showEditor_;
+    field.showEditor_ = function() {
+      originalShowEditor.apply(this, arguments);
+      const inputElement = Blockly.FieldTextInput && Blockly.FieldTextInput.htmlInput_;
+      if (!inputElement) return;
+      const displayText = formatProcedureReturnI32(
+          this.procedureReturnI32Value_, getProcedureReturnDisplayMode(this.procedureReturnBlock_));
+      inputElement.value = displayText;
+      inputElement.defaultValue = displayText;
+      inputElement.oldValue_ = null;
+      this.validate_();
+      this.resizeEditor_();
+      inputElement.select();
+    };
+    field.procedureReturnI32FormatterInstalled = true;
+  }
+  field.forceRerender();
+};
+
+const refreshProcedureReturnI32Display = (block) => {
+  installProcedureReturnI32Validator(block);
+  const input = block && block.getInput('VALUE');
+  const target = input && input.connection && input.connection.targetBlock();
+  const field = target && target.type === 'math_number' && target.getField
+    ? target.getField('NUM')
+    : null;
+  if (field) field.forceRerender();
+};
+
 Blockly.Blocks['procedures_return'] = {
   init: function() {
     this.appendValueInput('VALUE').appendField(
@@ -987,6 +1119,9 @@ Blockly.Blocks['procedures_return'] = {
     this.setTooltip('Return a value from this custom reporter');
     this.procedureId_ = '';
     this.returnType_ = '';
+    this.setOnChange(() => {
+      installProcedureReturnI32Validator(this);
+    });
   },
   mutationToDom: function() {
     var mutation = document.createElement('mutation');
@@ -999,6 +1134,18 @@ Blockly.Blocks['procedures_return'] = {
     this.returnType_ = xmlElement.getAttribute('returntype') || '';
     this.getInput('VALUE').setCheck(
         this.returnType_ === 'bool' ? 'Boolean' : null);
+    if (this.returnType_ !== 'i32' || this.getField('DISPLAY')) return;
+
+    const displayField = new Blockly.FieldDropdown(PROCEDURES_RETURN_DISPLAY_OPTIONS);
+    const originalDisplaySetValue = displayField.setValue;
+    displayField.setValue = function(value) {
+      originalDisplaySetValue.call(this, value);
+      refreshProcedureReturnI32Display(this.sourceBlock_);
+    };
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.PROCEDURES_RETURN_DISPLAY || 'Display')
+        .appendField(displayField, 'DISPLAY');
+    installProcedureReturnI32Validator(this);
   }
 };
 

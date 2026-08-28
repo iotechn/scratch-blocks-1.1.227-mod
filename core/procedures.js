@@ -255,6 +255,17 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
       returnBlock.setAttribute('type', 'procedures_return');
       returnBlock.setAttribute('gap', 24);
       returnBlock.appendChild(reporterMutation.cloneNode(false));
+      if (returnType === 'i32') {
+        var value = goog.dom.createDom('value');
+        value.setAttribute('name', 'VALUE');
+        var shadow = goog.dom.createDom('shadow');
+        shadow.setAttribute('type', 'math_number');
+        var field = goog.dom.createDom('field', null, '0');
+        field.setAttribute('name', 'NUM');
+        shadow.appendChild(field);
+        value.appendChild(shadow);
+        returnBlock.appendChild(value);
+      }
       xmlList.push(returnBlock);
     }
   });

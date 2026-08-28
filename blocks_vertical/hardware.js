@@ -73,8 +73,14 @@ const getGpioBusDisplayMode = (block) =>
 
 const formatGpioBusByte = (value, mode) => {
   const byte = clampGpioBusByte(value);
-  if (mode === 'HEX') return '0x' + byte.toString(16).toUpperCase();
-  if (mode === 'BIN') return '0b' + ('00000000' + byte.toString(2)).slice(-8);
+  if (mode === 'HEX') {
+    const digits = byte.toString(16).toUpperCase();
+    return '0x' + digits.padStart(Math.ceil(digits.length / 2) * 2, '0');
+  }
+  if (mode === 'BIN') {
+    const digits = byte.toString(2);
+    return '0b' + digits.padStart(Math.ceil(digits.length / 8) * 8, '0');
+  }
   return String(byte);
 };
 
@@ -237,10 +243,9 @@ Blockly.Blocks['gpio_bus_write'] = {
     };
     this.appendDummyInput()
         .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_WRITE_DISPLAY || 'Display')
-        .appendField(displayField, 'DISPLAY')
-        .setLineBreak(true);
+        .appendField(displayField, 'DISPLAY');
 
-    this.setInputsInline(false);
+    this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour('#4C97FF');
@@ -284,8 +289,7 @@ Blockly.Blocks['gpio_bus_shift'] = {
         .appendField(new Blockly.FieldDropdown([
           [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_LEFT, 'LEFT'],
           [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_RIGHT, 'RIGHT']
-        ]), 'DIRECTION')
-        .setLineBreak(true);
+        ]), 'DIRECTION');
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([
           [Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_NON_ROTATE, 'NON_ROTATE'],
@@ -294,13 +298,11 @@ Blockly.Blocks['gpio_bus_shift'] = {
         .setLineBreak(true);
     this.appendValueInput('N')
         .setCheck('Number')
-        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY)
-        .setLineBreak(true);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BY);
     this.appendDummyInput()
-        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX)
-        .setLineBreak(true);
+        .appendField(Blockly.Msg.HARDWARE_GPIO_BUS_SHIFT_BITS_SUFFIX);
 
-    this.setInputsInline(false);
+    this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour('#4C97FF');
