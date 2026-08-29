@@ -23380,6 +23380,26 @@ Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
   Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
 });
 
+// Control-flow transfer blocks are application extensions. Keep translated
+// labels for the host application's supported locales and an English fallback
+// for every other bundled Scratch locale.
+var controlFlowTransferMessages = {
+  'zh-cn': {CONTROL_BREAK: '跳出循环', CONTROL_CONTINUE: '继续循环'},
+  'zh-tw': {CONTROL_BREAK: '跳出迴圈', CONTROL_CONTINUE: '繼續迴圈'},
+  'en': {CONTROL_BREAK: 'break', CONTROL_CONTINUE: 'continue'},
+  'es': {CONTROL_BREAK: 'salir del bucle', CONTROL_CONTINUE: 'continuar'},
+  'pt-br': {CONTROL_BREAK: 'sair do loop', CONTROL_CONTINUE: 'continuar'},
+  'ja': {CONTROL_BREAK: 'ループを抜ける', CONTROL_CONTINUE: '次の繰り返しへ'},
+  'ko': {CONTROL_BREAK: '반복문 탈출', CONTROL_CONTINUE: '다음 반복 계속'},
+  'fr': {CONTROL_BREAK: 'sortir de la boucle', CONTROL_CONTINUE: 'continuer'},
+  'de': {CONTROL_BREAK: 'Schleife verlassen', CONTROL_CONTINUE: 'fortfahren'}
+};
+var controlFlowTransferFallback = controlFlowTransferMessages.en;
+Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
+  var messages = controlFlowTransferMessages[locale] || controlFlowTransferFallback;
+  Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
+});
+
 // Locale aliases for full BCP-47 tags used by host apps.
 Blockly.ScratchMsgs.locales['zh-CN'] = Blockly.ScratchMsgs.locales['zh-cn'];
 Blockly.ScratchMsgs.locales['zh-TW'] = Blockly.ScratchMsgs.locales['zh-tw'];

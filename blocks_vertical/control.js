@@ -368,6 +368,40 @@ Blockly.Blocks['control_while'] = {
   }
 };
 
+/**
+ * Block for leaving the innermost enclosing loop.
+ * The V2 compiler resolves the loop exit target and emits it as a u32-be
+ * address operand; the AST node intentionally carries no value inputs.
+ * @this Blockly.Block
+ */
+Blockly.Blocks['control_break'] = {
+  init: function() {
+    this.jsonInit({
+      "id": "control_break",
+      "message0": Blockly.Msg.CONTROL_BREAK,
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_statement"]
+    });
+  }
+};
+
+/**
+ * Block for continuing with the next iteration of the innermost enclosing loop.
+ * The V2 compiler resolves the loop continuation target and emits it as a
+ * u32-be address operand; the AST node intentionally carries no value inputs.
+ * @this Blockly.Block
+ */
+Blockly.Blocks['control_continue'] = {
+  init: function() {
+    this.jsonInit({
+      "id": "control_continue",
+      "message0": Blockly.Msg.CONTROL_CONTINUE,
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_statement"]
+    });
+  }
+};
+
 Blockly.Blocks['control_for_each'] = {
   /**
    * Block for for-each. This is an obsolete block that is implemented for

@@ -30,6 +30,11 @@ const GPIO_BUS_OPTIONS = [
   ['B2', 'B2'],
 ];
 
+const PWM_MODE_OPTIONS = () => [
+  [Blockly.Msg.HARDWARE_PWM_FREQUENCY_DUTY || 'frequency + duty cycle', 'FREQUENCY_DUTY'],
+  [Blockly.Msg.HARDWARE_PWM_PERIOD_PULSE || 'period + pulse width', 'PERIOD_PULSE'],
+];
+
 // Display-only format for GPIO bus write values. This field is intentionally
 // kept out of execution data by the editor; it only controls the block UI.
 const GPIO_BUS_DISPLAY_OPTIONS = () => [
@@ -343,6 +348,109 @@ Blockly.Blocks['gpio_set_pin'] = {
           [Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH, 'HIGH'],
           [Blockly.Msg.HARDWARE_GPIO_VALUE_LOW, 'LOW']
         ]), 'VALUE');
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/** Configure a GPIO output using PWM. Values are persisted as period/pulse. */
+Blockly.Blocks['gpio_set_pwm'] = {
+  init: function() {
+    this.appendDummyInput('HEADER')
+      .appendField(Blockly.Msg.HARDWARE_PWM_PREFIX || 'set GPIO')
+      .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+      .appendField(Blockly.Msg.HARDWARE_PWM_LABEL || 'PWM')
+      .setLineBreak(true);
+    this.appendDummyInput('MODE_ROW')
+      .appendField(Blockly.Msg.HARDWARE_PWM_PARAMETER || 'parameters')
+      .appendField(new Blockly.FieldDropdown(PWM_MODE_OPTIONS(), function(mode) {
+        const block = this.getSourceBlock ? this.getSourceBlock() : this.sourceBlock_;
+        if (block && block.updatePwmShape_) block.updatePwmShape_(mode);
+      }), 'MODE')
+      .setLineBreak(true);
+    this.appendValueInput('FREQUENCY').setCheck('Number')
+      .appendField(Blockly.Msg.HARDWARE_PWM_FREQUENCY || 'frequency');
+    this.appendDummyInput('FREQUENCY_UNIT').appendField('Hz').setLineBreak(true);
+    this.appendValueInput('DUTY').setCheck('Number')
+      .appendField(Blockly.Msg.HARDWARE_PWM_DUTY || 'duty cycle');
+    this.appendDummyInput('DUTY_UNIT').appendField('%').setLineBreak(true);
+    this.appendValueInput('PERIOD').setCheck('Number')
+      .appendField(Blockly.Msg.HARDWARE_PWM_PERIOD || 'period');
+    this.appendDummyInput('PERIOD_UNIT').appendField('\u03bcs').setLineBreak(true);
+    this.appendValueInput('PULSE').setCheck('Number')
+      .appendField(Blockly.Msg.HARDWARE_PWM_PULSE || 'pulse width');
+    this.appendDummyInput('PULSE_UNIT').appendField('\u03bcs').setLineBreak(true);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setOnChange(function() {
+      if (this.workspace && !this.workspace.isFlyout) this.validatePwm_();
+    });
+    this.updatePwmShape_('FREQUENCY_DUTY');
+  },
+  updatePwmShape_: function(mode) {
+    const frequency = mode === 'FREQUENCY_DUTY';
+    ['FREQUENCY', 'FREQUENCY_UNIT', 'DUTY', 'DUTY_UNIT'].forEach((name) => {
+      const input = this.getInput(name);
+      if (input) input.setVisible(frequency);
+    });
+    ['PERIOD', 'PERIOD_UNIT', 'PULSE', 'PULSE_UNIT'].forEach((name) => {
+      const input = this.getInput(name);
+      if (input) input.setVisible(!frequency);
+    });
+    this.syncPwmValues_(mode);
+    if (this.rendered) this.render();
+  },
+  syncPwmValues_: function(mode) {
+    const num = (name) => { const input = this.getInput(name); const target = input && input.connection && input.connection.targetBlock(); return Number(target && target.getFieldValue('NUM')); };
+    const set = (name, value) => { const input = this.getInput(name); const target = input && input.connection && input.connection.targetBlock(); if (Number.isFinite(value) && target) target.setFieldValue(String(value), 'NUM'); };
+    if (mode === 'PERIOD_PULSE') {
+      const frequency = num('FREQUENCY'); const duty = num('DUTY');
+      if (frequency > 0) { const period = 1000000 / frequency; set('PERIOD', Math.round(period)); if (Number.isFinite(duty)) set('PULSE', Math.round(period * Math.max(0, Math.min(100, duty)) / 100)); }
+    } else {
+      const period = num('PERIOD'); const pulse = num('PULSE');
+      if (period > 0) { set('FREQUENCY', 1000000 / period); if (Number.isFinite(pulse)) set('DUTY', Math.min(100, Math.max(0, pulse * 100 / period))); }
+    }
+  },
+  validatePwm_: function() {
+    if (this.getFieldValue('MODE') !== 'PERIOD_PULSE') return;
+    const periodInput = this.getInput('PERIOD');
+    const periodTarget = periodInput && periodInput.connection && periodInput.connection.targetBlock();
+    const period = Number(periodTarget && periodTarget.getFieldValue('NUM'));
+    const pulseInput = this.getInput('PULSE');
+    const pulseBlock = pulseInput && pulseInput.connection && pulseInput.connection.targetBlock();
+    const pulse = Number(pulseBlock && pulseBlock.getFieldValue('NUM'));
+    if (Number.isFinite(period) && Number.isFinite(pulse) && pulse > period && pulseBlock) {
+      pulseBlock.setFieldValue(String(period), 'NUM');
+    }
+  },
+  mutationToDom: function() {
+    const node = document.createElement('mutation');
+    node.setAttribute('mode', this.getFieldValue('MODE') || 'FREQUENCY_DUTY');
+    return node;
+  },
+  domToMutation: function(node) {
+    this.updatePwmShape_(node.getAttribute('mode') || 'FREQUENCY_DUTY');
+    const modeField = this.getField('MODE');
+    if (modeField) modeField.setValue(node.getAttribute('mode') || 'FREQUENCY_DUTY');
+  }
+};
+
+/** Disable PWM on a GPIO and leave it at the selected output level. */
+Blockly.Blocks['gpio_disable_pwm'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.HARDWARE_GPIO_DISABLE_PWM_PREFIX || 'disable GPIO')
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_DISABLE_PWM_MIDDLE || 'PWM and set level to')
+        .appendField(new Blockly.FieldDropdown([
+          [Blockly.Msg.HARDWARE_GPIO_VALUE_LOW, 'LOW'],
+          [Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH, 'HIGH']
+        ]), 'LEVEL');
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);

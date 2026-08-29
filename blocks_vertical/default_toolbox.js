@@ -83,6 +83,8 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="control_if_else" id="control_if_else"></block>' +
     '<block type="control_wait_until" id="control_wait_until"></block>' +
     '<block type="control_repeat_until" id="control_repeat_until"></block>' +
+    '<block type="control_break" id="control_break"></block>' +
+    '<block type="control_continue" id="control_continue"></block>' +
     '<block type="control_stop" id="control_stop"></block>' +
     '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
     '<block type="control_create_clone_of" id="control_create_clone_of">' +
@@ -266,6 +268,13 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="gpio_set_mode" id="gpio_set_mode"></block>' +
     '<block type="gpio_bus_set_mode" id="gpio_bus_set_mode"></block>' +
     '<block type="gpio_set_pin" id="gpio_set_pin"></block>' +
+    '<block type="gpio_set_pwm" id="gpio_set_pwm">' +
+      '<value name="FREQUENCY"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
+      '<value name="DUTY"><shadow type="math_number"><field name="NUM">50.00</field></shadow></value>' +
+      '<value name="PERIOD"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
+      '<value name="PULSE"><shadow type="math_number"><field name="NUM">500</field></shadow></value>' +
+    '</block>' +
+    '<block type="gpio_disable_pwm" id="gpio_disable_pwm"></block>' +
     '<block type="gpio_bus_write" id="gpio_bus_write">' +
       '<value name="VALUE">' +
         '<shadow type="math_number">' +
