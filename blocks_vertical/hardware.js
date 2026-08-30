@@ -91,6 +91,42 @@ const formatGpioBusByte = (value, mode) => {
 
 const GPIO_BUS_INPUT_RESTRICTOR = /[0-9a-fA-FxXbB.+\-eE]/;
 
+const SERVO_ANGLE_MIN = 0;
+const SERVO_ANGLE_MAX = 180;
+
+const clampServoAngle = (value) => {
+  const angle = Number(value);
+  if (!Number.isFinite(angle)) return null;
+  return String(Math.min(SERVO_ANGLE_MAX, Math.max(SERVO_ANGLE_MIN, angle)));
+};
+
+const installServoAngleValidator = (block) => {
+  const input = block.getInput('ANGLE');
+  const connection = input && input.connection;
+  const target = connection && connection.targetBlock();
+  const field = target && typeof target.getField === 'function'
+    ? target.getField('NUM')
+    : null;
+  if (!field || !target || !/^math_/.test(target.type)) return;
+
+  if (!field.servoAngleValidatorInstalled) {
+    const originalValidator = field.getValidator && field.getValidator();
+    field.setValidator(function(value) {
+      const validated = originalValidator
+        ? originalValidator.call(this, value)
+        : value;
+      if (validated === null) return null;
+      return clampServoAngle(validated);
+    });
+    field.servoAngleValidatorInstalled = true;
+  }
+
+  const normalized = clampServoAngle(field.getText());
+  if (normalized !== null && normalized !== field.getText()) {
+    field.setText(normalized);
+  }
+};
+
 const installGpioBusByteValidator = (block) => {
   const input = block.getInput('VALUE');
   const connection = input && input.connection;
@@ -372,17 +408,21 @@ Blockly.Blocks['gpio_set_pwm'] = {
       }), 'MODE')
       .setLineBreak(true);
     this.appendValueInput('FREQUENCY').setCheck('Number')
-      .appendField(Blockly.Msg.HARDWARE_PWM_FREQUENCY || 'frequency');
-    this.appendDummyInput('FREQUENCY_UNIT').appendField('Hz').setLineBreak(true);
+      .appendField(Blockly.Msg.HARDWARE_PWM_FREQUENCY || 'frequency')
+      .setLineBreak(true);
+    this.appendDummyInput('FREQUENCY_UNIT').appendField('Hz');
     this.appendValueInput('DUTY').setCheck('Number')
-      .appendField(Blockly.Msg.HARDWARE_PWM_DUTY || 'duty cycle');
-    this.appendDummyInput('DUTY_UNIT').appendField('%').setLineBreak(true);
+      .appendField(Blockly.Msg.HARDWARE_PWM_DUTY || 'duty cycle')
+      .setLineBreak(true);
+    this.appendDummyInput('DUTY_UNIT').appendField('%');
     this.appendValueInput('PERIOD').setCheck('Number')
-      .appendField(Blockly.Msg.HARDWARE_PWM_PERIOD || 'period');
-    this.appendDummyInput('PERIOD_UNIT').appendField('\u03bcs').setLineBreak(true);
+      .appendField(Blockly.Msg.HARDWARE_PWM_PERIOD || 'period')
+      .setLineBreak(true);
+    this.appendDummyInput('PERIOD_UNIT').appendField('\u03bcs');
     this.appendValueInput('PULSE').setCheck('Number')
-      .appendField(Blockly.Msg.HARDWARE_PWM_PULSE || 'pulse width');
-    this.appendDummyInput('PULSE_UNIT').appendField('\u03bcs').setLineBreak(true);
+      .appendField(Blockly.Msg.HARDWARE_PWM_PULSE || 'pulse width')
+      .setLineBreak(true);
+    this.appendDummyInput('PULSE_UNIT').appendField('\u03bcs');
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -561,5 +601,9 @@ Blockly.Blocks['control_servo'] = {
     this.setNextStatement(true, null);
     this.setColour('#4C97FF');
     this.setHelpUrl('');
+    this.setOnChange(() => {
+      installServoAngleValidator(this);
+    });
+    installServoAngleValidator(this);
   }
 };

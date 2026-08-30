@@ -1328,10 +1328,14 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps,
         // Don't include corner radius - no corner (edge shape drawn).
         steps.push('H', cursorX - this.edgeShapeWidth_);
       }
-      // Subtract CORNER_RADIUS * 2 to account for the top right corner
-      // and also the bottom right corner. Only move vertically the non-corner length.
+      // Intermediate rows need one radius after the top-right corner so the
+      // outline advances by the same full height as cursorY. The final row
+      // is followed by renderDrawBottom_'s bottom-right corner instead.
       if (!this.edgeShape_) {
-        steps.push('v', row.height - Blockly.BlockSvg.CORNER_RADIUS * 2);
+        var isFinalRow = y == inputRows.length - 1;
+        var verticalLength = row.height - (isFinalRow ?
+          Blockly.BlockSvg.CORNER_RADIUS * 2 : Blockly.BlockSvg.CORNER_RADIUS);
+        steps.push('v', verticalLength);
       }
     } else if (row.type == Blockly.NEXT_STATEMENT) {
       // Nested statement.
@@ -1714,7 +1718,13 @@ Blockly.BlockSvg.prototype.renderMoveConnections_ = function() {
   }
 
   for (var i = 0; i < this.inputList.length; i++) {
-    var conn = this.inputList[i].connection;
+    var input = this.inputList[i];
+    // Hidden inputs are omitted from renderCompute_ and must not move or
+    // tighten their connections against the visible block geometry.
+    if (!input.isVisible()) {
+      continue;
+    }
+    var conn = input.connection;
     if (conn) {
       conn.moveToOffset(blockTL);
       if (conn.isConnected()) {

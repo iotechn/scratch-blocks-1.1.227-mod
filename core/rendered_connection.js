@@ -381,6 +381,18 @@ Blockly.RenderedConnection.prototype.connect_ = function(childConnection) {
   var parentConnection = this;
   var parentBlock = parentConnection.getSourceBlock();
   var childBlock = childConnection.getSourceBlock();
+  var parentInput = parentBlock.getInputWithConnection(parentConnection);
+
+  // A mutation can hide an input before XML deserialization connects its
+  // shadow.  Apply the input visibility to the child at connection time so
+  // late-connected shadows stay out of the rendered block.
+  if (parentInput && !parentInput.isVisible()) {
+    var childSvgRoot = childBlock.getSvgRoot && childBlock.getSvgRoot();
+    if (childSvgRoot) {
+      childSvgRoot.style.display = 'none';
+    }
+    childBlock.rendered = false;
+  }
 
   if (parentBlock.rendered) {
     parentBlock.updateDisabled();
