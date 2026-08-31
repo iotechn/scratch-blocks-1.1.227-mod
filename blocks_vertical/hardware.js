@@ -127,6 +127,41 @@ const installServoAngleValidator = (block) => {
   }
 };
 
+const CONTINUOUS_SERVO_SPEED_MIN = 0;
+const CONTINUOUS_SERVO_SPEED_MAX = 100;
+
+const clampContinuousServoSpeed = (value) => {
+  const speed = Number(value);
+  if (!Number.isFinite(speed)) return null;
+  return String(Math.min(CONTINUOUS_SERVO_SPEED_MAX,
+      Math.max(CONTINUOUS_SERVO_SPEED_MIN, Math.trunc(speed))));
+};
+
+const installContinuousServoSpeedValidator = (block) => {
+  const input = block.getInput('SPEED');
+  const connection = input && input.connection;
+  const target = connection && connection.targetBlock();
+  const field = target && typeof target.getField === 'function'
+    ? target.getField('NUM')
+    : null;
+  if (!field || !target || !['math_number', 'math_whole_number'].includes(target.type)) return;
+
+  if (!field.continuousServoSpeedValidatorInstalled) {
+    const originalValidator = field.getValidator && field.getValidator();
+    field.setValidator(function(value) {
+      const validated = originalValidator
+        ? originalValidator.call(this, value)
+        : value;
+      if (validated === null) return null;
+      return clampContinuousServoSpeed(validated);
+    });
+    field.continuousServoSpeedValidatorInstalled = true;
+  }
+
+  const normalized = clampContinuousServoSpeed(field.getText());
+  if (normalized !== null && normalized !== field.getText()) field.setText(normalized);
+};
+
 const installGpioBusByteValidator = (block) => {
   const input = block.getInput('VALUE');
   const connection = input && input.connection;
@@ -605,5 +640,70 @@ Blockly.Blocks['control_servo'] = {
       installServoAngleValidator(this);
     });
     installServoAngleValidator(this);
+  }
+};
+
+/**
+ * 连续旋转舵机控制。
+ * 积木类型：control_servo_continuous
+ * 参数：PIN（下拉选引脚）、DIRECTION（方向）、SPEED（速度百分比，可嵌套表达式）
+ */
+const CONTINUOUS_SERVO_DIRECTION_OPTIONS = () => [
+  [Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_DIRECTION_CLOCKWISE || 'clockwise', 'CLOCKWISE'],
+  [Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_DIRECTION_COUNTERCLOCKWISE || 'counter-clockwise', 'COUNTERCLOCKWISE'],
+  [Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_DIRECTION_STOP || 'stop', 'STOP']
+];
+
+Blockly.Blocks['control_servo_continuous'] = {
+  init: function() {
+    const directionField = new Blockly.FieldDropdown(CONTINUOUS_SERVO_DIRECTION_OPTIONS(), function(direction) {
+      const block = this.getSourceBlock ? this.getSourceBlock() : this.sourceBlock_;
+      if (block && block.updateContinuousServoShape_) block.updateContinuousServoShape_(direction);
+    });
+    this.appendDummyInput('HEADER')
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_PREFIX || 'servo pin')
+        .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
+        .appendField(directionField, 'DIRECTION');
+    this.appendValueInput('SPEED')
+        .setCheck('Number')
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_SPEED_LABEL || 'at speed');
+    this.appendDummyInput('SPEED_UNIT')
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_SPEED_SUFFIX || '%');
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+    this.setOnChange(() => {
+      installContinuousServoSpeedValidator(this);
+    });
+    this.updateContinuousServoShape_('CLOCKWISE');
+    installContinuousServoSpeedValidator(this);
+  },
+  updateContinuousServoShape_: function(direction) {
+    const showSpeed = direction !== 'STOP';
+    const renderList = [];
+    ['SPEED', 'SPEED_UNIT'].forEach((name) => {
+      const input = this.getInput(name);
+      if (input) renderList.push.apply(renderList, input.setVisible(showSpeed));
+    });
+    if (this.rendered) {
+      if (!renderList.length) renderList.push(this);
+      for (let i = 0, block; block = renderList[i]; i++) {
+        block.render();
+      }
+    }
+  },
+  mutationToDom: function() {
+    const node = document.createElement('mutation');
+    node.setAttribute('direction', this.getFieldValue('DIRECTION') || 'CLOCKWISE');
+    return node;
+  },
+  domToMutation: function(node) {
+    const direction = node.getAttribute('direction') || this.getFieldValue('DIRECTION') || 'CLOCKWISE';
+    const field = this.getField('DIRECTION');
+    if (field) field.setValue(direction);
+    this.updateContinuousServoShape_(direction);
   }
 };
