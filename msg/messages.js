@@ -293,6 +293,10 @@ Blockly.Msg.CATEGORY_OPERATORS = 'Operators';
 Blockly.Msg.CATEGORY_VARIABLES = 'Variables';
 Blockly.Msg.CATEGORY_MYBLOCKS = 'My Blocks';
 Blockly.Msg.CATEGORY_HARDWARE = 'Hardware';
+Blockly.Msg.HARDWARE_CATEGORY_GPIO = 'GPIO';
+Blockly.Msg.HARDWARE_CATEGORY_BUS = 'Bus';
+Blockly.Msg.HARDWARE_CATEGORY_PWM_SERVO = 'PWM / Servo';
+Blockly.Msg.HARDWARE_CATEGORY_SYSTEM = 'System / Other';
 
 // Hardware blocks
 Blockly.Msg.HARDWARE_GPIO_SET_MODE_PREFIX = 'set GPIO pin';

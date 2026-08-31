@@ -265,16 +265,14 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_HARDWARE}" id="hardware" colour="#4C97FF" secondaryColour="#3373CC">' +
+    '<label text="%{BKY_HARDWARE_CATEGORY_GPIO}"></label>' +
     '<block type="gpio_set_mode" id="gpio_set_mode"></block>' +
-    '<block type="gpio_bus_set_mode" id="gpio_bus_set_mode"></block>' +
     '<block type="gpio_set_pin" id="gpio_set_pin"></block>' +
-    '<block type="gpio_set_pwm" id="gpio_set_pwm">' +
-      '<value name="FREQUENCY"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
-      '<value name="DUTY"><shadow type="math_number"><field name="NUM">50.00</field></shadow></value>' +
-      '<value name="PERIOD"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
-      '<value name="PULSE"><shadow type="math_number"><field name="NUM">500</field></shadow></value>' +
-    '</block>' +
-    '<block type="gpio_disable_pwm" id="gpio_disable_pwm"></block>' +
+    '<block type="gpio_read_pin_high" id="gpio_read_pin_high"></block>' +
+    '<block type="gpio_read_pin_low" id="gpio_read_pin_low"></block>' +
+    '<block type="gpio_toggle_pin" id="gpio_toggle_pin"></block>' +
+    '<label text="%{BKY_HARDWARE_CATEGORY_BUS}"></label>' +
+    '<block type="gpio_bus_set_mode" id="gpio_bus_set_mode"></block>' +
     '<block type="gpio_bus_write" id="gpio_bus_write">' +
       '<value name="VALUE">' +
         '<shadow type="math_number">' +
@@ -291,10 +289,15 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     '<block type="gpio_bus_not" id="gpio_bus_not"></block>' +
-    '<block type="gpio_read_pin_high" id="gpio_read_pin_high"></block>' +
-    '<block type="gpio_read_pin_low" id="gpio_read_pin_low"></block>' +
+    '<label text="%{BKY_HARDWARE_CATEGORY_PWM_SERVO}"></label>' +
+    '<block type="gpio_set_pwm" id="gpio_set_pwm">' +
+      '<value name="FREQUENCY"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
+      '<value name="DUTY"><shadow type="math_number"><field name="NUM">50.00</field></shadow></value>' +
+      '<value name="PERIOD"><shadow type="math_number"><field name="NUM">1000</field></shadow></value>' +
+      '<value name="PULSE"><shadow type="math_number"><field name="NUM">500</field></shadow></value>' +
+    '</block>' +
+    '<block type="gpio_disable_pwm" id="gpio_disable_pwm"></block>' +
     '<block type="gpio_set_servo_mode" id="gpio_set_servo_mode"></block>' +
-    '<block type="gpio_toggle_pin" id="gpio_toggle_pin"></block>' +
     '<block type="control_servo" id="control_servo">' +
       '<value name="ANGLE">' +
         '<shadow type="math_whole_number">' +
@@ -309,6 +312,8 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    '<label text="%{BKY_HARDWARE_CATEGORY_SYSTEM}"></label>' +
+    '<block type="system_uptime_milliseconds" id="system_uptime_milliseconds"></block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
   '</category>' +

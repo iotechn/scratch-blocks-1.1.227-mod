@@ -23528,6 +23528,71 @@ Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
   Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
 });
 
+// Hardware flyout group labels are application extensions. Keep translations
+// for the host application's supported locales and an English fallback for
+// every other bundled Scratch locale.
+var hardwareCategoryMessages = {
+  'zh-cn': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: '总线',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / 舵机',
+    HARDWARE_CATEGORY_SYSTEM: '系统 / 其他'
+  },
+  'zh-tw': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: '匯流排',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / 舵機',
+    HARDWARE_CATEGORY_SYSTEM: '系統 / 其他'
+  },
+  'en': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'Bus',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / Servo',
+    HARDWARE_CATEGORY_SYSTEM: 'System / Other'
+  },
+  'es': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'Bus',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / Servos',
+    HARDWARE_CATEGORY_SYSTEM: 'Sistema / Otros'
+  },
+  'pt-br': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'Barramento',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / Servos',
+    HARDWARE_CATEGORY_SYSTEM: 'Sistema / Outros'
+  },
+  'ja': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'バス',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / サーボ',
+    HARDWARE_CATEGORY_SYSTEM: 'システム / その他'
+  },
+  'ko': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: '버스',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / 서보',
+    HARDWARE_CATEGORY_SYSTEM: '시스템 / 기타'
+  },
+  'fr': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'Bus',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / Servos',
+    HARDWARE_CATEGORY_SYSTEM: 'Système / Autres'
+  },
+  'de': {
+    HARDWARE_CATEGORY_GPIO: 'GPIO',
+    HARDWARE_CATEGORY_BUS: 'Bus',
+    HARDWARE_CATEGORY_PWM_SERVO: 'PWM / Servos',
+    HARDWARE_CATEGORY_SYSTEM: 'System / Sonstiges'
+  }
+};
+var hardwareCategoryMessagesFallback = hardwareCategoryMessages.en;
+Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
+  var messages = hardwareCategoryMessages[locale] || hardwareCategoryMessagesFallback;
+  Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
+});
+
 // Locale aliases for full BCP-47 tags used by host apps.
 Blockly.ScratchMsgs.locales['zh-CN'] = Blockly.ScratchMsgs.locales['zh-cn'];
 Blockly.ScratchMsgs.locales['zh-TW'] = Blockly.ScratchMsgs.locales['zh-tw'];
