@@ -23482,6 +23482,52 @@ Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
   Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
 });
 
+// GPIO PWM-disable labels are application extensions. Keep the translated
+// comma-style wording in every supported host locale.
+var gpioDisablePwmMessages = {
+  'zh-cn': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: '关闭 GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM，电平为'
+  },
+  'zh-tw': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: '關閉 GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM，電平為'
+  },
+  'en': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'disable GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM, level to'
+  },
+  'es': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'desactivar GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM, nivel en'
+  },
+  'pt-br': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'desativar GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM, nível como'
+  },
+  'ja': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWMを無効、レベルを'
+  },
+  'ko': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM 비활성화, 레벨'
+  },
+  'fr': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'désactiver GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM, le niveau sur'
+  },
+  'de': {
+    HARDWARE_GPIO_DISABLE_PWM_PREFIX: 'GPIO',
+    HARDWARE_GPIO_DISABLE_PWM_MIDDLE: 'PWM deaktivieren, Pegel auf'
+  }
+};
+var gpioDisablePwmMessagesFallback = gpioDisablePwmMessages.en;
+Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
+  var messages = gpioDisablePwmMessages[locale] || gpioDisablePwmMessagesFallback;
+  Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
+});
+
 // Locale aliases for full BCP-47 tags used by host apps.
 Blockly.ScratchMsgs.locales['zh-CN'] = Blockly.ScratchMsgs.locales['zh-cn'];
 Blockly.ScratchMsgs.locales['zh-TW'] = Blockly.ScratchMsgs.locales['zh-tw'];

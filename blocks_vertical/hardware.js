@@ -521,7 +521,7 @@ Blockly.Blocks['gpio_disable_pwm'] = {
     this.appendDummyInput()
         .appendField(Blockly.Msg.HARDWARE_GPIO_DISABLE_PWM_PREFIX || 'disable GPIO')
         .appendField(new Blockly.FieldDropdown(GPIO_PIN_OPTIONS), 'PIN')
-        .appendField(Blockly.Msg.HARDWARE_GPIO_DISABLE_PWM_MIDDLE || 'PWM and set level to')
+        .appendField(Blockly.Msg.HARDWARE_GPIO_DISABLE_PWM_MIDDLE || 'PWM, level to')
         .appendField(new Blockly.FieldDropdown([
           [Blockly.Msg.HARDWARE_GPIO_VALUE_LOW, 'LOW'],
           [Blockly.Msg.HARDWARE_GPIO_VALUE_HIGH, 'HIGH']
@@ -666,7 +666,8 @@ Blockly.Blocks['control_servo_continuous'] = {
         .appendField(directionField, 'DIRECTION');
     this.appendValueInput('SPEED')
         .setCheck('Number')
-        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_SPEED_LABEL || 'at speed');
+        .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_SPEED_LABEL || 'at speed')
+        .setLineBreak(true);
     this.appendDummyInput('SPEED_UNIT')
         .appendField(Blockly.Msg.HARDWARE_CONTROL_SERVO_CONTINUOUS_SPEED_SUFFIX || '%');
 
