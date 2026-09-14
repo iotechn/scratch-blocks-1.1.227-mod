@@ -587,18 +587,11 @@ Blockly.Blocks['tell_agent'] = {
   init: function() {
     this.appendDummyInput('PREFIX_TEXT')
         .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_PREFIX || 'tell agent')
-        .appendField('"')
-        .appendField(new Blockly.FieldTextInput(''), 'PREFIX')
-        .appendField('"');
+        .appendField(new Blockly.FieldTextInput(''), 'PREFIX');
     this.appendValueInput('VALUE')
-        .setCheck('Number')
-        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_OPEN || '(');
-    this.appendDummyInput('VALUE_CLOSE')
-        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_CLOSE || ')');
+        .setCheck('Number');
     this.appendDummyInput('SUFFIX_TEXT')
-        .appendField('"')
-        .appendField(new Blockly.FieldTextInput(''), 'SUFFIX')
-        .appendField('"');
+        .appendField(new Blockly.FieldTextInput(''), 'SUFFIX');
 
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
