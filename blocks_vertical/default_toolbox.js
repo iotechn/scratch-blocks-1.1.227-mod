@@ -314,6 +314,14 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
     '<label text="%{BKY_HARDWARE_CATEGORY_SYSTEM}"></label>' +
     '<block type="system_uptime_milliseconds" id="system_uptime_milliseconds"></block>' +
+    '<label text="%{BKY_HARDWARE_CATEGORY_AGENT}"></label>' +
+    '<block type="tell_agent" id="tell_agent">' +
+      '<value name="VALUE">' +
+        '<shadow type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
   '</category>' +

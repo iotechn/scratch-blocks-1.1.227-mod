@@ -23593,6 +23593,70 @@ Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
   Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
 });
 
+// Tell-agent labels are application extensions. Keep the product locales
+// explicit and use English for every other bundled Scratch locale.
+var tellAgentMessages = {
+  'zh-cn': {
+    HARDWARE_CATEGORY_AGENT: '智能体',
+    HARDWARE_TELL_AGENT_PREFIX: '告诉智能体',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'zh-tw': {
+    HARDWARE_CATEGORY_AGENT: '智慧體',
+    HARDWARE_TELL_AGENT_PREFIX: '告訴智慧體',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'en': {
+    HARDWARE_CATEGORY_AGENT: 'Agent',
+    HARDWARE_TELL_AGENT_PREFIX: 'tell agent',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'es': {
+    HARDWARE_CATEGORY_AGENT: 'Agente',
+    HARDWARE_TELL_AGENT_PREFIX: 'decirle al agente',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'pt-br': {
+    HARDWARE_CATEGORY_AGENT: 'Agente',
+    HARDWARE_TELL_AGENT_PREFIX: 'dizer ao agente',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'ja': {
+    HARDWARE_CATEGORY_AGENT: 'エージェント',
+    HARDWARE_TELL_AGENT_PREFIX: 'エージェントに伝える',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'ko': {
+    HARDWARE_CATEGORY_AGENT: '에이전트',
+    HARDWARE_TELL_AGENT_PREFIX: '에이전트에게 알리기',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'fr': {
+    HARDWARE_CATEGORY_AGENT: 'Agent',
+    HARDWARE_TELL_AGENT_PREFIX: 'dire à l’agent',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  },
+  'de': {
+    HARDWARE_CATEGORY_AGENT: 'Agent',
+    HARDWARE_TELL_AGENT_PREFIX: 'Agent informieren',
+    HARDWARE_TELL_AGENT_VALUE_OPEN: '(',
+    HARDWARE_TELL_AGENT_VALUE_CLOSE: ')'
+  }
+};
+var tellAgentMessagesFallback = tellAgentMessages.en;
+Object.keys(Blockly.ScratchMsgs.locales).forEach(function(locale) {
+  var messages = tellAgentMessages[locale] || tellAgentMessagesFallback;
+  Object.assign(Blockly.ScratchMsgs.locales[locale], messages);
+});
+
 // Locale aliases for full BCP-47 tags used by host apps.
 Blockly.ScratchMsgs.locales['zh-CN'] = Blockly.ScratchMsgs.locales['zh-cn'];
 Blockly.ScratchMsgs.locales['zh-TW'] = Blockly.ScratchMsgs.locales['zh-tw'];

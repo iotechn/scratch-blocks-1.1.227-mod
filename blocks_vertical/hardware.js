@@ -579,6 +579,36 @@ Blockly.Blocks['system_uptime_milliseconds'] = {
 };
 
 /**
+ * Send a numeric value to the configured AI agent with optional text around it.
+ * Block type: tell_agent (firmware opcode: 0x006B)
+ * Parameters: PREFIX/SUFFIX (text fields), VALUE (numeric expression).
+ */
+Blockly.Blocks['tell_agent'] = {
+  init: function() {
+    this.appendDummyInput('PREFIX_TEXT')
+        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_PREFIX || 'tell agent')
+        .appendField('"')
+        .appendField(new Blockly.FieldTextInput(''), 'PREFIX')
+        .appendField('"');
+    this.appendValueInput('VALUE')
+        .setCheck('Number')
+        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_OPEN || '(');
+    this.appendDummyInput('VALUE_CLOSE')
+        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_CLOSE || ')');
+    this.appendDummyInput('SUFFIX_TEXT')
+        .appendField('"')
+        .appendField(new Blockly.FieldTextInput(''), 'SUFFIX')
+        .appendField('"');
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
  * 将 GPIO 配置为舵机控制模式。
  * 积木类型：gpio_set_servo_mode（固件 opcode：gpio_set_servo_mode）
  * 参数：PIN（引脚号）

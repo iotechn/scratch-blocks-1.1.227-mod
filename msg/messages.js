@@ -297,6 +297,7 @@ Blockly.Msg.HARDWARE_CATEGORY_GPIO = 'GPIO';
 Blockly.Msg.HARDWARE_CATEGORY_BUS = 'Bus';
 Blockly.Msg.HARDWARE_CATEGORY_PWM_SERVO = 'PWM / Servo';
 Blockly.Msg.HARDWARE_CATEGORY_SYSTEM = 'System / Other';
+Blockly.Msg.HARDWARE_CATEGORY_AGENT = 'Agent';
 
 // Hardware blocks
 Blockly.Msg.HARDWARE_GPIO_SET_MODE_PREFIX = 'set GPIO pin';
@@ -314,6 +315,9 @@ Blockly.Msg.HARDWARE_GPIO_READ_PIN_PREFIX = 'GPIO pin';
 Blockly.Msg.HARDWARE_GPIO_READ_PIN_HIGH_SUFFIX = 'is high';
 Blockly.Msg.HARDWARE_GPIO_READ_PIN_LOW_SUFFIX = 'is low';
 Blockly.Msg.HARDWARE_SYSTEM_UPTIME_MILLISECONDS = 'milliseconds since system startup';
+Blockly.Msg.HARDWARE_TELL_AGENT_PREFIX = 'tell agent';
+Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_OPEN = '(';
+Blockly.Msg.HARDWARE_TELL_AGENT_VALUE_CLOSE = ')';
 Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_PREFIX = 'set GPIO pin';
 Blockly.Msg.HARDWARE_GPIO_SET_SERVO_MODE_SUFFIX = 'to servo mode';
 Blockly.Msg.HARDWARE_GPIO_TOGGLE_PIN_PREFIX = 'toggle GPIO pin';
