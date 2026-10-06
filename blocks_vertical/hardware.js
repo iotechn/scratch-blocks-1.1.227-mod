@@ -579,9 +579,9 @@ Blockly.Blocks['system_uptime_milliseconds'] = {
 };
 
 /**
- * Send a numeric value to the configured AI agent with optional text around it.
+ * Send a value to the configured AI agent with optional text around it.
  * Block type: tell_agent (firmware opcode: 0x006B)
- * Parameters: PREFIX/SUFFIX (text fields), VALUE (numeric expression).
+ * Parameters: PREFIX/SUFFIX (text fields), VALUE (string, number or boolean).
  */
 Blockly.Blocks['tell_agent'] = {
   init: function() {
@@ -589,7 +589,7 @@ Blockly.Blocks['tell_agent'] = {
         .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_PREFIX || 'tell agent')
         .appendField(new Blockly.FieldTextInput(''), 'PREFIX');
     this.appendValueInput('VALUE')
-        .setCheck('Number');
+        .setCheck(['String', 'Number', 'Boolean']);
     this.appendDummyInput('SUFFIX_TEXT')
         .appendField(new Blockly.FieldTextInput(''), 'SUFFIX');
 
