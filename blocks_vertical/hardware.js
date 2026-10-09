@@ -602,6 +602,25 @@ Blockly.Blocks['tell_agent'] = {
 };
 
 /**
+ * Send a plain text value to the configured AI agent.
+ * Block type: tell_agent_text (firmware opcode: 0x006B)
+ * Parameters: TEXT (editable string field).
+ */
+Blockly.Blocks['tell_agent_text'] = {
+  init: function() {
+    this.appendDummyInput('TEXT_INPUT')
+        .appendField(Blockly.Msg.HARDWARE_TELL_AGENT_PREFIX || 'tell agent')
+        .appendField(new Blockly.FieldTextInput(''), 'TEXT');
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour('#4C97FF');
+    this.setHelpUrl('');
+  }
+};
+
+/**
  * 将 GPIO 配置为舵机控制模式。
  * 积木类型：gpio_set_servo_mode（固件 opcode：gpio_set_servo_mode）
  * 参数：PIN（引脚号）
