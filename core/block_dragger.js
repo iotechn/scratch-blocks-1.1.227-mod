@@ -272,24 +272,36 @@ Blockly.BlockDragger.prototype.endBlockDrag = function(e, currentDragDeltaXY) {
     });
   }
 
-  // Scratch-specific: roll back deletes that create call blocks with defines.
-  // Have to wait for connections to be re-established, so put in setTimeout.
-  // Only do this if we deleted a proc def.
+  // Scratch-specific: roll back deletes that leave calls without definitions.
+  // Wait for connections to be re-established before checking.
   if (isDeletingProcDef) {
     var ws = this.workspace_;
     setTimeout(function() {
       var allBlocks = ws.getAllBlocks();
+      var missingProcedureCode = null;
       for (var i = 0; i < allBlocks.length; i++) {
         var block = allBlocks[i];
         if (block.type == Blockly.PROCEDURES_CALL_BLOCK_TYPE) {
           var procCode = block.getProcCode();
           // Check for call blocks with no associated define block.
           if (!Blockly.Procedures.getDefineBlock(procCode, ws)) {
-            alert(Blockly.Msg.PROCEDURE_USED);
-            ws.undo();
-            return; // There can only be one define deletion at a time.
+            missingProcedureCode = procCode;
+            break; // There can only be one define deletion at a time.
           }
         }
+      }
+      if (missingProcedureCode) {
+        ws.undo();
+        var restoredDefinition = Blockly.Procedures.getDefineBlock(
+            missingProcedureCode, ws);
+        if (restoredDefinition &&
+            Blockly.Procedures.deleteProcedureDefPromptCallback) {
+          Blockly.Procedures.deleteProcedureDefPromptCallback(
+              missingProcedureCode, restoredDefinition);
+        } else {
+          alert(Blockly.Msg.PROCEDURE_USED);
+        }
+        return;
       }
       // The proc deletion was valid, update the toolbox.
       ws.refreshToolboxSelection_();

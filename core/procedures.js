@@ -591,21 +591,30 @@ Blockly.Procedures.makeShowDefinitionOption = function(block) {
  * @param {string} procCode The identifier of the procedure to delete.
  * @param {!Blockly.Block} definitionRoot The root block of the stack that
  *     defines the custom procedure.
+ * @param {boolean=} deleteCallers True to also delete all calls to the
+ *     procedure.
  * @return {boolean} True if the custom procedure was deleted, false otherwise.
  * @package
  */
 Blockly.Procedures.deleteProcedureDefCallback = function(procCode,
-    definitionRoot) {
+    definitionRoot, deleteCallers) {
   var callers = Blockly.Procedures.getCallers(procCode,
       definitionRoot.workspace, definitionRoot, false /* allowRecursive */);
-  if (callers.length > 0) {
+  if (callers.length > 0 && !deleteCallers) {
     return false;
   }
 
   var workspace = definitionRoot.workspace;
 
-  // Delete the whole stack.
+  // Delete callers and the definition as one undoable action.
   Blockly.Events.setGroup(true);
+  if (deleteCallers) {
+    for (var i = 0, caller; caller = callers[i]; i++) {
+      if (caller.workspace) {
+        caller.dispose(true);
+      }
+    }
+  }
   definitionRoot.dispose();
   Blockly.Events.setGroup(false);
 

@@ -179,7 +179,12 @@ Blockly.ScratchBlocks.VerticalExtensions.PROCEDURE_DEF_CONTEXTMENU = {
           var didDelete = Blockly.Procedures.deleteProcedureDefCallback(
               procCode, rootBlock);
           if (!didDelete) {
-            alert(Blockly.Msg.PROCEDURE_USED);
+            if (Blockly.Procedures.deleteProcedureDefPromptCallback) {
+              Blockly.Procedures.deleteProcedureDefPromptCallback(
+                  procCode, rootBlock);
+            } else {
+              alert(Blockly.Msg.PROCEDURE_USED);
+            }
           }
         };
       }
